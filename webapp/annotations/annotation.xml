@@ -1,0 +1,578 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1" />
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/sap/ZMM_SCP_SRV/$metadata">
+        <edmx:Include Alias="Metadata" Namespace="ZMM_SCP_SRV" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="zfiuimatdiffcalc.Annotations.annotation.ZMM_SCP_SRV">
+            <Annotations Target="ZMM_SCP_SRV.ScList">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <!-- table -->
+                            <PropertyValue Property="Value" Path="Scnum" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Dstat" />
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Hdtot" />
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Scnum</PropertyPath>
+                        <!-- secim backendden gelmeyen filtre -->
+                        <PropertyPath>Dstat</PropertyPath>
+                        <PropertyPath>CreDate</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.ScList/Scnum">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="CollectionPath" String="ShScnumSet" />
+                        <PropertyValue Property="SearchSupported" Bool="true" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Scnum" />
+                                    <PropertyValue Property="ValueListProperty" String="Scnum" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.ScList/Dstat">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="CollectionPath" String="ShDstatSet" />
+                        <PropertyValue String="Belge Durum Kodu" Property="SearchSupported" Bool="true" />
+                        <PropertyValue String="Belge Durum Kodu" Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dstat" />
+                                    <PropertyValue Property="ValueListProperty" String="Dstat" />
+                                </Record>
+                                <Record Type="Common.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dstattx" />
+                                    <PropertyValue Property="ValueListProperty" String="Dstattx" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotation Term="UI.PresentationVariant">
+                <Record Type="UI.PresentationVariantType">
+                    <PropertyValue Property="RequestAtLeast">
+                        <Collection>
+                            <PropertyPath>Scnum</PropertyPath>
+                            <PropertyPath>Dstat</PropertyPath>
+                            <!-- <PropertyPath>Hdtot</PropertyPath> -->
+                        </Collection>
+                    </PropertyValue>
+                </Record>
+            </Annotation>
+            <!-- Settings butonu i18n ayarlar? -->
+            <Annotations Target="Metadata.ScList/Hwaer">
+                <Annotation Term="com.sap.vocabularies.Common.v1.Label" String="{i18n>Hwaer}" />
+            </Annotations>
+            <Annotations Target="Metadata.ScList/ObeOuser">
+                <Annotation Term="com.sap.vocabularies.Common.v1.Label" String="{i18n>ObeOuser}" />
+            </Annotations>
+            <Annotations Target="Metadata.ScList/ObeApstp">
+                <Annotation Term="com.sap.vocabularies.Common.v1.Label" String="{i18n>ObeApstp}" />
+            </Annotations>
+            <Annotations Target="Metadata.ScList/ObeApstx">
+                <Annotation Term="com.sap.vocabularies.Common.v1.Label" String="{i18n>ObeApstx}" />
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/ZzLifnr">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="ZzLifnr" />
+                        <PropertyValue Property="CollectionPath" String="ZshLifnrSet" />
+                        <!-- <PropertyValue String="Sat?c?" Property="SearchSupported" Bool="true" /> -->
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="ZzLifnr" />
+                                    <PropertyValue Property="ValueListProperty" String="Lifnr" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Name1" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/ZzIncotrm">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="ZzIncotrm" />
+                        <PropertyValue Property="CollectionPath" String="HTincSet" />
+                        <!-- <PropertyValue String="Sat?c?" Property="SearchSupported" Bool="true" /> -->
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="ZzIncotrm" />
+                                    <PropertyValue Property="ValueListProperty" String="Inco1" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Bezei" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Uname">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Uname" />
+                        <PropertyValue Property="CollectionPath" String="ApproversFromFioriSet" />
+                        <!-- <PropertyValue String="Sat?c?" Property="SearchSupported" Bool="true" /> -->
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Uname" />
+                                    <PropertyValue Property="ValueListProperty" String="Bname" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="NameText" />
+                                    <PropertyValue Property="ValueListProperty" String="NameText" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Aufnr">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Aufnr" />
+                        <PropertyValue Property="CollectionPath" String="ShAufnrSet" />
+                        <!-- <PropertyValue String="Sat?c?" Property="SearchSupported" Bool="true" /> -->
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Aufnr" />
+                                    <PropertyValue Property="ValueListProperty" String="Aufnr" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Auart" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Ktext" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Prodi">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Prodi" />
+                        <PropertyValue Property="CollectionPath" String="ZscpShMatnrSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prodi" />
+                                    <PropertyValue Property="ValueListProperty" String="Prodid" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prodtx" />
+                                    <PropertyValue Property="ValueListProperty" String="Prodtx" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkl" />
+                                    <PropertyValue Property="ValueListProperty" String="Categid" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkltx" />
+                                    <PropertyValue Property="ValueListProperty" String="Categtx" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dokod" />
+                                    <PropertyValue Property="ValueListProperty" String="Dokod" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Prodit">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Prodi" />
+                        <PropertyValue Property="CollectionPath" String="ZscpShTMatnrSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prodit" />
+                                    <PropertyValue Property="ValueListProperty" String="Prodid" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Prodtx" />
+                                    <PropertyValue Property="ValueListProperty" String="Prodtx" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkl" />
+                                    <PropertyValue Property="ValueListProperty" String="Categid" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkltx" />
+                                    <PropertyValue Property="ValueListProperty" String="Categtx" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Zzbwart">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Zzbwart" />
+                        <PropertyValue Property="CollectionPath" String="ShBwartSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Zzbwart" />
+                                    <PropertyValue Property="ValueListProperty" String="Bwart" />
+                                </Record>
+                                 <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FieldWerks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Btext" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dokod" />
+                                    <PropertyValue Property="ValueListProperty" String="Dokod" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.ShBwart/Dokod">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+            </Annotations>
+              <Annotations Target="ZMM_SCP_SRV.ShBwart/Werks">
+                <Annotation Term="UI.Hidden" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/FieldWerks">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="FieldWerks" />
+                        <PropertyValue Property="CollectionPath" String="AlanUretimYeriSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FieldWerks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Name1" />
+                                </Record>
+                                
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Pyp">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Pyp" />
+                        <PropertyValue Property="CollectionPath" String="PypListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Pyp" />
+                                    <PropertyValue Property="ValueListProperty" String="Pspnrx" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Werks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Postu" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="ZpsTbeln" />
+                                    <PropertyValue Property="ValueListProperty" String="ZpsTbeln" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dokod" />
+                                    <PropertyValue Property="ValueListProperty" String="Dokod" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Kostl">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Kostl" />
+                        <PropertyValue Property="CollectionPath" String="CostCenterSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Kostl" />
+                                    <PropertyValue Property="ValueListProperty" String="Kostl" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Gsber" />
+                                    <PropertyValue Property="ValueListProperty" String="Gsber" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Werks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Ktext" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.CostCenter/Werks">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Meins">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Meins" />
+                        <PropertyValue Property="CollectionPath" String="MeasureListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Meins" />
+                                    <PropertyValue Property="ValueListProperty" String="Msehi" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Msehl" />
+                                    <PropertyValue Property="ValueListProperty" String="Msehl" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Werks">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Werks" />
+                        <PropertyValue Property="CollectionPath" String="WerksListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Werks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="WerksDesc" />
+                                    <PropertyValue Property="ValueListProperty" String="Name1" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Matkl">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Matkl" />
+                        <PropertyValue Property="CollectionPath" String="MaterialGroupSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkl" />
+                                    <PropertyValue Property="ValueListProperty" String="Matkl" />
+                                </Record>
+
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Dokod" />
+                                    <PropertyValue Property="ValueListProperty" String="Dokod" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Hizmet" />
+                                    <PropertyValue Property="ValueListProperty" String="Hizmet" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Matkltx" />
+                                    <PropertyValue Property="ValueListProperty" String="Wgbez60" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZMM_SCP_SRV.MaterialGroup/Dokod">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.MaterialGroup/Hizmet">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Lgort">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Lgort" />
+                        <PropertyValue Property="CollectionPath" String="LgortListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Lgort" />
+                                    <PropertyValue Property="ValueListProperty" String="Lgort" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Werks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Lgobe" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+             <Annotations Target="ZMM_SCP_SRV.Smartfield/FieldLgort">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="FieldLgort" />
+                        <PropertyValue Property="CollectionPath" String="LgortListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FieldLgort" />
+                                    <PropertyValue Property="ValueListProperty" String="Lgort" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterIn">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="FieldWerks" />
+                                    <PropertyValue Property="ValueListProperty" String="Werks" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Lgobe" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+              <Annotations Target="ZMM_SCP_SRV.FieldLgort/Werks">
+                <Annotation Term="UI.HiddenFilter" Bool="true" />
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Iwaer">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Iwaer" />
+                        <PropertyValue Property="CollectionPath" String="CurrencyListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Iwaer" />
+                                    <PropertyValue Property="ValueListProperty" String="Waers" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" String="Ltext" />
+                                    <PropertyValue Property="ValueListProperty" String="Ltext" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <Annotations Target="ZMM_SCP_SRV.Smartfield/Saknr">
+                <!-- valuhelp -->
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Saknr" />
+                        <PropertyValue Property="CollectionPath" String="CurrencyListSet" />
+                        <PropertyValue String="ZMM_SCP_SRV" Property="CollectionRoot" />
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="Saknr" />
+                                    <PropertyValue Property="ValueListProperty" String="Saknr" />
+                                </Record>
+                                <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Txt20" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

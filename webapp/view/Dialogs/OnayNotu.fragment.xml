@@ -1,0 +1,38 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{i18n>OnayNotu}"
+		contentWidth="50%">
+        <f:SimpleForm id="onayNotuForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>onayAciklama}" />
+				<Text text="{ApprovalNote}" />
+			</f:content>
+		</f:SimpleForm>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressCloseOnayNotu"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

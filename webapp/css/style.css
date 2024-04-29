@@ -1,0 +1,19 @@
+/* Enter your custom styles here */
+
+.TalepDurum{
+    -moz-border-radius: 50%; 
+    -webkit-border-radius: 50%;
+    margin-left : 10px;
+}
+
+.fontSizeKalemNotlari{
+	font-size : 20px !important;
+}
+.attachmentDialogTextClass{
+	width : 100px !important;
+	font-weight : bold !important;
+	font-size : 13px !important;
+	line-height : 30px !important;
+	text-align : right !important;
+	margin-right : 10px !important;
+}

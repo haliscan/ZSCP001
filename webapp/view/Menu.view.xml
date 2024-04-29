@@ -1,0 +1,101 @@
+<mvc:View
+	controllerName="com.tupras.zsrmscp.controller.Menu"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:tnt="sap.tnt"
+>
+	<Shell
+		id="shell"
+		appWidthLimited="false"
+	>
+		<App
+			id="idAppControl"
+			class="sapUiSizeCompact"
+		>
+			<pages>
+				<Page id="page">
+					<content>
+						<!-- <f:GridList
+                            id="gridList"
+                            headerText="Al��veri� sepeti portal�"
+                            items="{menuModel>/}">
+                            <f:customLayout>
+                                <grid:GridResponsiveLayout layoutChange="onLayoutChange">
+                                    <grid:layoutS>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.25rem 0.25rem" />
+                                    </grid:layoutS>
+                                    <grid:layoutM>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.5rem 0.5rem" />
+                                    </grid:layoutM>
+                                    <grid:layoutL>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.75rem 0.75rem" />
+                                    </grid:layoutL>
+                                    <grid:layoutXL>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 30rem)" gridGap="1rem 1rem" />
+                                    </grid:layoutXL>
+                                </grid:GridResponsiveLayout>
+                            </f:customLayout>
+                            <f:GridListItem press="onPressGrid" type="Navigation">
+                                <VBox height="100%">
+									<HBox height="100%" class="sapUiSmallMargin" alignItems="Center">
+										<core:Icon src="{menuModel>Icon}" color="{menuModel>Color}" class="sapUiSmallMarginEnd" width="100%" size="5rem"/>
+										<VBox>
+											<Title text="{menuModel>Dtytx}" wrapping="true"/>
+											<Label text="{menuModel>Fodes}" wrapping="true"/>
+										</VBox>
+									</HBox>
+								</VBox>
+                            </f:GridListItem>
+                        </f:GridList> -->
+						<f:GridList
+							id="gridList"
+							headerText="{i18n>MenuTitle}"
+							items="{menuModel>/}"
+						>
+							<f:customLayout>
+								<cssgrid:GridBoxLayout
+									xmlns:cssgrid="sap.ui.layout.cssgrid"
+									boxesPerRowConfig="XL3 L3 M2 S1"
+								/>
+							</f:customLayout>
+							<f:GridListItem
+								press="onPressGrid"
+								type="Navigation"
+							>
+								<VBox height="100%">
+									<HBox
+										height="100%"
+										class="sapUiSmallMargin"
+										alignItems="Center"
+									>
+										<core:Icon
+											src="{menuModel>Icon}"
+											color="{menuModel>Color}"
+											class="sapUiSmallMarginEnd"
+											width="100%"
+											size="5rem"
+										/>
+										<VBox>
+											<Title
+												text="{menuModel>Dtytx}"
+												wrapping="true"
+											/>
+											<Label
+												text="{menuModel>Fodes}"
+												wrapping="true"
+											/>
+										</VBox>
+									</HBox>
+								</VBox>
+							</f:GridListItem>
+						</f:GridList>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

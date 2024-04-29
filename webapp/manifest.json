@@ -1,0 +1,321 @@
+{
+    "_version": "1.17.0",
+    "sap.app": {
+        "id": "com.tupras.zsrmscp",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZMM_SCP_SRV/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "Annotations/annotation.xml"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "@sap/ux-app-migrator:freestyle",
+            "version": "1.12.0",
+            "toolsId": "ba8d7003-d0d8-48ab-aa7e-2825798b3b94"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "fullWidth": true,
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.71.40",
+            "libs": {
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.tupras.zsrmscp.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false
+                }
+            },
+            "odata_service": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.tupras.zsrmscp.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteApp",
+                    "pattern": "RouteApp",
+                    "target": [
+                        "TargetApp"
+                    ]
+                },
+                {
+                    "name": "Menu",
+                    "pattern": "",
+                    "target": [
+                        "Menu"
+                    ]
+                },
+                {
+                    "name": "NotFound",
+                    "pattern": "NotFound",
+                    "target": [
+                        "NotFound"
+                    ]
+                },
+                {
+                    "name": "Olustur",
+                    "pattern": "Olustur/{BelgeTipi}",
+                    "target": [
+                        "Detail"
+                    ]
+                },
+                {
+                    "name": "Goruntule",
+                    "pattern": "Display/{BelgeNumarasi}",
+                    "target": [
+                        "Detail"
+                    ]
+                },
+                {
+                    "name": "TalepTanimla",
+                    "pattern": "Talep",
+                    "target": [
+                        "TalepTanimla"
+                    ]
+                },
+                {
+                    "name": "TalepListesi",
+                    "pattern": "TalepListesi",
+                    "target": [
+                        "TalepListesi"
+                    ]
+                },
+                {
+                    "name": "Details",
+                    "pattern": "Details/{type}/{belgeNumarasi}/{prodId}",
+                    "target": [
+                        "UrunDetay"
+                    ]
+                },
+                {
+                    "name": "Cart",
+                    "pattern": "Cart/{type}",
+                    "target": [
+                        "Cart"
+                    ]
+                },
+                {
+                    "name": "Cart_Catalog",
+                    "pattern": "Cart/{type}/{belgeNumarasi}",
+                    "target": [
+                        "Cart"
+                    ]
+                },
+                {
+                    "name": "GecmisSiparisler",
+                    "pattern": "GecmisSiparisler",
+                    "target": [
+                        "GecmisSiparisler"
+                    ]
+                },
+                {
+                    "name": "Products",
+                    "pattern": "Products/{category}",
+                    "target": [
+                        "Products"
+                    ]
+                },
+                {
+                    "name": "Profile",
+                    "pattern": "Profile",
+                    "target": [
+                        "Profile"
+                    ]
+                },
+                {
+                    "name": "SearchPage",
+                    "pattern": "SearchPage/{type}",
+                    "target": [
+                        "SearchPage"
+                    ]
+                },
+                {
+                    "name": "SearchPage_Catalog",
+                    "pattern": "SearchPage/{type}/{belgeNumarasi}",
+                    "target": [
+                        "SearchPage"
+                    ]
+                },
+                {
+                    "name": "CatalogPage",
+                    "pattern": "CatalogPage/{type}",
+                    "target": [
+                        "CatalogPage"
+                    ]
+                },
+                {
+                    "name": "CatalogPage_Catalog",
+                    "pattern": "CatalogPage/{type}/{belgeNumarasi}",
+                    "target": [
+                        "CatalogPage"
+                    ]
+                },
+                {
+                    "name": "DetailSearch",
+                    "pattern": "DetailSearch/{type}/{searchText}",
+                    "target": [
+                        "DetailSearch"
+                    ]
+                },
+                {
+                    "name": "SearchPageNotRefresh",
+                    "pattern": "SearchPage/{type}/{yenile}",
+                    "target": [
+                        "SearchPage"
+                    ]
+                },
+                {
+                    "name": "CatalogPageNotRefresh",
+                    "pattern": "CatalogPage/{type}/{yenile}",
+                    "target": [
+                        "CatalogPage"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetApp": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "App",
+                    "viewName": "App"
+                },
+                "Menu": {
+                    "viewType": "XML",
+                    "viewName": "Menu"
+                },
+                "Detail": {
+                    "viewType": "XML",
+                    "viewName": "Detail"
+                },
+                "TalepTanimla": {
+                    "viewType": "XML",
+                    "viewName": "TalepTanimla"
+                },
+                "TalepListesi": {
+                    "viewType": "XML",
+                    "viewName": "TalepListesi"
+                },
+                "UrunDetay": {
+                    "viewType": "XML",
+                    "viewName": "UrunDetay"
+                },
+                "Cart": {
+                    "viewType": "XML",
+                    "viewName": "Cart"
+                },
+                "GecmisSiparisler": {
+                    "viewType": "XML",
+                    "viewName": "GecmisSiparisler"
+                },
+                "Products": {
+                    "viewType": "XML",
+                    "viewName": "Products"
+                },
+                "Profile": {
+                    "viewType": "XML",
+                    "viewName": "Profile"
+                },
+                "SearchPage": {
+                    "viewType": "XML",
+                    "viewName": "SearchPage"
+                },
+                "CatalogPage": {
+                    "viewType": "XML",
+                    "viewName": "CatalogPage"
+                },
+                "DetailSearch": {
+                    "viewType": "XML",
+                    "viewName": "DetailSearch"
+                },
+                "NotFound": {
+                    "viewType": "XML",
+                    "viewName": "NotFound"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.tupras.zsrmscp.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    },
+    "sap.platform.abap": {
+        "uri": "/sap/bc/ui5_ui5/sap/zscp001",
+        "_version": "1.1.0"
+    }
+}

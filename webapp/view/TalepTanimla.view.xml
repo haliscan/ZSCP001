@@ -1,0 +1,67 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	controllerName="com.tupras.zsrmscp.controller.TalepTanimla" xmlns:html="http://www.w3.org/1999/xhtml">
+	<App>
+		<pages>
+			<Page title="{i18n>talepTanimla}" class="sapUiSizeCompact" showNavButton="true" navButtonPress="onNavBack">
+				<subHeader>
+					<OverflowToolbar>
+                    <Image src="{path: '',formatter: '.formatter.logoFormatter'}" width="80px" height="22px" press="onClickHome" />
+						<Button icon="sap-icon://home" tooltip="Ana Sayfa" press="onClickHome"/>
+						<ToolbarSpacer/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://person-placeholder" tooltip="{i18n>LastOrders}" press="onGecmisSiparisler"/>
+						<Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet"/>
+					</OverflowToolbar>
+				</subHeader>
+				<content>
+					<f:SimpleForm id="SimpleFormChange354" editable="true" layout="ResponsiveGridLayout" title="{i18n>talebiniziTanimlayin}" labelSpanXL="3"
+						labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+						columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+						<f:content>
+							<Label text="{i18n>tanim}" required="true"/>
+							<Input value="{talepModel>/tanim}"/>
+							<Label text="{i18n>dahiliNot}"/>
+							<TextArea value="{talepModel>/not}" rows="4"/>
+							<Label text="{i18n>kategori}"/>
+							<Input valueHelpOnly="true" showValueHelp="true" value="{talepModel>/kategori}"/>
+							<Label text="{i18n>miktarBirim}"/>
+							<Input value="{talepModel>/miktar}" textAlign="End">
+								<layoutData>
+									<l:GridData span="XL2 L3 M3 S5"/>
+								</layoutData>
+							</Input>
+							<Input value="{talepModel>/birim}" valueHelpOnly="true" showValueHelp="true">
+								<layoutData>
+									<l:GridData span="XL1 L2 M2 S4"/>
+								</layoutData>
+							</Input>
+							<Label text="{i18n>fiyatParaBirimi}"/>
+							<Input value="{ parts: ['talepModel>/netFiyat', 'talepModel>/netFiyat'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false }}" textAlign="End">
+								<layoutData>
+									<l:GridData span="XL2 L3 M3 S5"/>
+								</layoutData>
+							</Input>
+							<Input value="{talepModel>/paraBirimi}" valueHelpOnly="true" showValueHelp="true">
+								<layoutData>
+									<l:GridData span="XL1 L2 M2 S4"/>
+								</layoutData>
+							</Input>
+							<Label text="{i18n>teslimatTarihi}"/>
+							<DatePicker width="200px" dateValue="{talepModel>/teslimatTarihi}" displayFormat="dd.MM.yyyy" valueFormat="yyyyMMdd"/>
+							<Label text=""/>
+							<Button width="200px" text="{i18n>olustur}" type="Accept" icon="sap-icon://complete"
+							press="handlePressOlustur" class="sapUiTinyMarginTop"/>
+						</f:content>
+					</f:SimpleForm>
+				</content>
+				<!--<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="{i18n>olustur}" type="Accept" icon="sap-icon://complete"
+							press="handlePressOlustur"/>
+					</Toolbar>
+				</footer>-->
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

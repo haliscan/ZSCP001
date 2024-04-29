@@ -1,0 +1,230 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.tupras.zsrmscp.controller.Products"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid" xmlns:semantic="sap.m.semantic" height="100%"
+	xmlns:l="sap.ui.layout">
+	<App>
+		<pages>
+			<Page>
+				<!--<headerContent>
+					<Button icon="sap-icon://home" tooltip="Home" press="onClickHome"/>
+					<Button icon="sap-icon://person-placeholder" tooltip="Profil"/>
+					<Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet"/>
+				</headerContent>-->
+				<subHeader>
+					<OverflowToolbar>
+						<ImageContent class="sapUiTinyMarginBottom"
+							src="{path: '',formatter: '.formatter.logoFormatter'}" description="Icon"
+							press="onClickHome"></ImageContent>
+						<Button icon="sap-icon://home" tooltip="Ana Sayfa" press="onClickHome"/>
+						<ToolbarSpacer/>
+						<!--<Input id="searchInput" width="40rem" showSuggestion="true" suggestionItems="{helperSearchModel>/}" liveChange="getSearchFields">
+							<suggestionItems>
+								<core:Item text="{helperSearchModel>UrunAdi}"/>
+							</suggestionItems>
+						</Input>
+						<Button id="kategoriAraButton" press="handlePressSearchCategory" icon="sap-icon://search" type="Emphasized"/>-->
+						<HBox alignItems="Center" justifyContent="Center">
+							<Button id="kategoriButton" text="Kategoriler" press="handlePressOpenMenu" icon="sap-icon://slim-arrow-right" type="Emphasized"/>
+							<Input id="searchInput" width="40rem" showSuggestion="true" suggestionItems="{helperSearchModel>/}" liveChange="getSearchFields">
+								<suggestionItems>
+									<core:Item text="{helperSearchModel>UrunAdi}"/>
+								</suggestionItems>
+							</Input>
+							<Button id="kategoriAraButton" press="handlePressSearchCategory" icon="sap-icon://search" type="Emphasized"/>
+						</HBox>
+						<HBox alignItems="Center" justifyContent="Center">
+							<Link text="{i18n>DetailedSearchPage}" press="onDetayliArama"/></HBox>
+						<ToolbarSpacer/>
+						<Button text="Excel Aktar" tooltip="Excel Aktar" press="onCantFind" icon="sap-icon://upload"/>
+						<Button text="Can't Find" tooltip="Can't find" press="onCantFind"/>
+						<Button icon="sap-icon://person-placeholder" tooltip="{i18n>Past}" press="onClickGecmis"/>
+						<Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet"/>
+					</OverflowToolbar>
+				</subHeader>
+				<content>
+					<SplitContainer>
+						<masterPages>
+							<semantic:MasterPage title="Filtreler" showFooter="false">
+								<!--<List id="ShortProductList1" headerText="Kategoriler" growing="true" growingThreshold="5" growingScrollToLoad="false"
+									items="{path:'familyModel>/'}">
+									<items>
+										<StandardListItem title="{familyModel>KategoriAdi} ({familyModel>MalGrubu}) " type="Active" press="onFilterCategoryPress"
+											info="{familyModel>ToplamUrunAdedi}"/>
+									</items>
+								</List>-->
+								<List headerText="{i18n>Tedarikci}" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="AKPA DAY(5)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="{i18n>SUMOTAC}(24)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="CEM {i18n>TICARET}(7)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="{i18n>GOKDEMIRLER}(12)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+								<List headerText="{i18n>Markasi}" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="AYGAZ(4)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Test Marka(21)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="{i18n>Arcelik}(17)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Merapisoft(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+								<List headerText="{i18n>Ozellikler}" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="{i18n>UruneOzelOzellik}(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Boyut(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Miktar(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Fiyat(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+								<List headerText="Kategoriler" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text="" selected="true"/>
+													<Link text="LPG(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="{i18n>Dogal} Gaz(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Kategori Test(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Kaynak(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+							</semantic:MasterPage>
+						</masterPages>
+						<detailPages>
+							<semantic:DetailPage title="{i18n>Products}" showFooter="false">
+							<!--	<Carousel class="sapUiContentPadding" loop="true" height="24rem">
+									<Image src="https://www.markacenter.com/Uploads/UrunResimleri/buyuk/arcelik-284630-ei-no-frost-buzdolabi-2a95.png"
+										alt="Example picture of speakers"/>
+									<Image src="https://www.markacenter.com/Uploads/UrunResimleri/buyuk/arcelik-284630-ei-no-frost-buzdolabi-2a95.png"
+										alt="Example picture of USB flash drive"/>
+									<Image src="https://www.markacenter.com/Uploads/UrunResimleri/buyuk/arcelik-284630-ei-no-frost-buzdolabi-2a95.png"
+										alt="Example picture of spotlight"/>
+									<Image src="https://www.markacenter.com/Uploads/UrunResimleri/buyuk/arcelik-284630-ei-no-frost-buzdolabi-2a95.png"
+										alt="Example picture of screw"/>
+								</Carousel>
+								<Panel height="150px">
+									<FlexBox alignContent="Center" alignItems="Center" class="sapUiLargeMarginBegin">
+										<Image src="https://cdn.akakce.com/apple/iphone-11-64-gb-z.jpg" width="auto" height="110px">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Image>
+										<Image src="https://cdn.akakce.com/faber-castell/faber-castell-grip-2011-0-7-mm-versatil-kalem-z.jpg" width="auto" height="110px">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Image>
+										<Image src="https://cdn.akakce.com/einhell/einhell-te-cd-18-2-li-i-kit-18-v-akulu-darbeli-z.jpg" width="auto" height="110px">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Image>
+										<Image src="https://cdn.akakce.com/unaan/unaan-yna-800-alindan-temassiz-z.jpg" width="auto" height="110px">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Image>
+										<Image src="https://cdn.akakce.com/apple/iphone-11-64-gb-z.jpg" width="auto" height="110px">
+											<layoutData>
+												<FlexItemData growFactor="1"/>
+											</layoutData>
+										</Image>
+									</FlexBox>
+								</Panel>-->
+								<!--<f:GridList id="gridProducts" mode="None" items="{ path: 'productsModel>/productListesi' }" class="sapUiResponsiveContentPadding"
+									growing="true" growingThreshold="24" growingScrollToLoad="true" visible="true">
+									<f:customLayout>
+										<grid:GridBasicLayout gridTemplateColumns="repeat(auto-fit, minmax(16rem, 2fr))" gridGap="1.5rem"/>
+									</f:customLayout>
+									<f:GridListItem press="onPressGrid" counter="{productsModel>UrunAdedi}" type="Navigation">
+										<VBox height="100%">
+											<Image src="{productsModel>PictureUrl}" width="100%" visible="true" class="imageDisplayBlock" height="200px"/>
+											<HBox height="100%" class="sapUiSmallMargin" alignItems="Center" visible="true" justifyContent="SpaceBetween">
+												<VBox>
+													<RatingIndicator value="4" iconSize="24px"/>
+													<Text wrapping="true" text="{productsModel>UrunAdi}" class="sapUiSmallMarginTop"/>
+													<Text wrapping="true" text="{productsModel>KategoriAdi}"/>
+													<Text wrapping="true" text="{productsModel>MalGrubu}"/>
+													<HBox>
+														<Title text="En Ucuz Fiyat :"/>
+														<ObjectNumber number="{productsModel>MinimumFiyat}" unit="{productsModel>ParaBirimi}" state="Success" class="sapUiTinyMarginBegin"/>
+													</HBox>
+												</VBox>
+											</HBox>
+										</VBox>
+									</f:GridListItem>
+								</f:GridList> -->
+								<List items="{/CatProdListSet}" id="listProductsProduct">
+									<ObjectListItem title="{Prodtx}" type="Active" press="onPressGrid" number="{MinimumFiyat}"
+										numberUnit="{ParaBirimi}" icon="{productsModel>PictureUrl}" numberState="Success">
+										<ObjectAttribute text="{Prodid}"/>
+										<ObjectAttribute text="{Categtx}"/>
+									</ObjectListItem>
+								</List>
+							</semantic:DetailPage>
+						</detailPages>
+					</SplitContainer>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,166 @@
+<mvc:View
+	controllerName="com.tupras.zsrmscp.controller.TalepListesi"
+	xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:smartVariant="sap.ui.comp.smartvariants"
+	xmlns:core="sap.ui.core"
+	xmlns:uit="sap.ui.table"
+	xmlns:smartTable="sap.ui.comp.smarttable"
+>
+	<semantic:SemanticPage
+		id="page"
+		headerPinnable="false"
+		toggleHeaderOnTitleClick="false"
+	>
+		<semantic:titleHeading>
+			<smartVariant:SmartVariantManagement
+				id="pageVariant"
+				persistencyKey="SmartVariantPKey"
+			/>
+		</semantic:titleHeading>
+		<semantic:headerContent>
+			<smartFilterBar:SmartFilterBar
+				useDateRangeType="true"
+				id="smartFilterBar"
+				entitySet="ScListSet"
+				smartVariant="pageVariant"
+				useToolbar="true"
+				persistencyKey="SmartFilterPKey"
+			>
+				<smartFilterBar:controlConfiguration>
+					<smartFilterBar:ControlConfiguration
+						label="{i18n>Scnum}"
+						visibleInAdvancedArea="true"
+						preventInitialDataFetchInValueHelpDialog="true"
+						key="Scnum"
+					/>
+					<smartFilterBar:ControlConfiguration
+						label="{i18n>Dstat}"
+						visibleInAdvancedArea="true"
+						preventInitialDataFetchInValueHelpDialog="true"
+						key="Dstat"
+					/>
+					<smartFilterBar:ControlConfiguration
+						label="{i18n>CreDate}"
+						key="CreDate"
+						visibleInAdvancedArea="true"
+						conditionType="{
+							defaultOperation: 'CreDate'
+						}"
+					/>
+				</smartFilterBar:controlConfiguration>
+			</smartFilterBar:SmartFilterBar>
+		</semantic:headerContent>
+		<semantic:content>
+			<smartTable:SmartTable
+				tableType="ResponsiveTable"
+				id="smartTable"
+				entitySet="ScListSet"
+				smartVariant="pageVariant"
+				smartFilterId="smartFilterBar"
+				showFullScreenButton="true"
+				useExportToExcel="true"
+				requestAtLeastFields="Scnum,Hdtot,Dstat,Dstattx"
+				useVariantManagement="false"
+				useTablePersonalisation="true"
+				header="Talep Listesi"
+				showRowCount="true"
+				persistencyKey="variantData"
+			>
+				<smartTable:customToolbar>
+					<OverflowToolbar design="Transparent">
+						<ToolbarSpacer/>
+						<OverflowToolbarButton
+							text="Referans Yarat"
+							icon="sap-icon://create"
+							tooltip="Referans Yarat"
+							press="refCreate"
+						/>
+						<OverflowToolbarButton
+							text="Sil"
+							icon="sap-icon://delete"
+							tooltip="Sil"
+							press="deleteRequest"
+						/>
+					</OverflowToolbar>
+				</smartTable:customToolbar>
+				<uit:Table
+					selectionMode="Single"
+					visibleRowCountMode="Auto"
+					rowActionCount="1"
+				>
+					<uit:rowActionTemplate>
+						<uit:RowAction>
+							<uit:items>
+								<uit:RowActionItem
+									icon="sap-icon://feeder-arrow"
+									type="Navigation"
+									press="onPress"
+								/>
+							</uit:items>
+						</uit:RowAction>
+					</uit:rowActionTemplate>
+					<uit:columns>
+						<uit:Column
+							width="auto"
+							sortProperty="Scnum"
+							filterProperty="Scnum"
+						>
+							<uit:customData>
+								<core:CustomData
+									key="p13nData"
+									value='\{"columnKey":"Scnum","columnIndex":"0","leadingProperty":"Scnum","sortProperty":"Scnum"}'
+								/>
+							</uit:customData>
+							<Label text="{i18n>AlisverisSepetiNumarasi}"/>
+							<uit:template>
+								<Text text="{Scnum}"/>
+							</uit:template>
+						</uit:Column>
+						<uit:Column
+							width="auto"
+							sortProperty="Dstat"
+							filterProperty="Dstat"
+						>
+							<uit:customData>
+								<core:CustomData
+									key="p13nData"
+									value='\{"columnKey":"Dstat","columnIndex":"1","leadingProperty": "Dstat","sortProperty": "Dstat"}'
+								/>
+							</uit:customData>
+							<Label text="Belge Durum Kodu"/>
+							<uit:template>
+								<Text text="{Dstattx}"/>
+							</uit:template>
+						</uit:Column>
+						<uit:Column
+							width="auto"
+							sortProperty="Hdtot"
+							filterProperty="Hdtot"
+						>
+							<uit:customData>
+								<core:CustomData
+									key="p13nData"
+									value='\{"columnKey":"Hdtot","columnIndex":"2","leadingProperty": "Hdtot"}'
+								/>
+							</uit:customData>
+							<Label text="Toplam"/>
+							<uit:template>
+								<Text text="{
+									path: 'Hdtot',
+									type: 'sap.ui.model.odata.type.Decimal',
+									constraints: {
+										scale: 3
+									}
+								}"/>
+							</uit:template>
+						</uit:Column>
+					</uit:columns>
+				</uit:Table>
+			</smartTable:SmartTable>
+		</semantic:content>
+	</semantic:SemanticPage>
+</mvc:View>

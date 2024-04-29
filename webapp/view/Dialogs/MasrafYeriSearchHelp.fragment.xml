@@ -1,0 +1,77 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/TitleMasrafYeri}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchMasrafYeri"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="MasrafYeri"
+					visibleInFilterBar="true"
+					label="{i18n>filterMasrafYeri}">
+					<fb:control>
+						<Input 
+							value="{/Kostl}"
+							maxLength="10"
+							submit="handleSearchMasrafYeri"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>filterMasrafYeriTanimi}">
+					<fb:control>
+						<Input 
+							value="{/Ktext}"
+							maxLength="20"
+							submit="handleSearchMasrafYeri" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableMasrafYerleri"
+			width="auto"
+			items="{odata_service>/CostCenterSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnMasrafYeri}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedMasrafYeri">
+					<cells>
+						<Text text="{odata_service>Kostl}"/>
+						<Text text="{odata_service>Ktext}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatMasrafYeri"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

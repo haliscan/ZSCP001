@@ -1,0 +1,42 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:smartField="sap.ui.comp.smartfield"
+>
+	<Dialog title="{i18n>searchHelpLgort}">
+		<content>
+			<VBox class="sapUiSmallMarginBegin">
+				<Label
+					text="{i18n>lgort}"
+					width="95%"
+					textAlign="Center"
+				/>
+				<smartField:SmartField
+					width="95%"
+					textAlign="Center"
+					value="{Lgort}"
+					innerControlsCreated="onInnerControlsCreated"
+					editable="true"
+				>
+					<smartField:configuration>
+						<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+					</smartField:configuration>
+				</smartField:SmartField>
+			</VBox>
+		</content>
+		<buttons>
+			<Button
+				text="{i18n>add}"
+				press="handlePressLgortDialogAdd"
+				icon="sap-icon://add"
+				type="Accept"
+			/>
+			<Button
+				text="{i18n>cancel}"
+				press="handlePressLgortDialogClose"
+				icon="sap-icon://decline"
+				type="Reject"
+			/>
+		</buttons>
+	</Dialog>
+</c:FragmentDefinition>

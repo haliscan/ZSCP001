@@ -1,0 +1,54 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout"
+    xmlns:grid="sap.ui.layout.cssgrid">
+	<Dialog 
+		title="Seçim yapınız"
+		contentWidth="80%"
+        class="sapUiResponsivePadding">
+                        <f:GridList
+                            headerText="Alışveriş sepeti portali"
+                            items="{altDialogModel>/}">
+                            <!--<f:customLayout>
+                                <grid:GridResponsiveLayout layoutChange="onLayoutChange">
+                                    <grid:layoutS>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.25rem 0.25rem" />
+                                    </grid:layoutS>
+                                    <grid:layoutM>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.5rem 0.5rem" />
+                                    </grid:layoutM>
+                                    <grid:layoutL>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 20rem)" gridGap="0.75rem 0.75rem" />
+                                    </grid:layoutL>
+                                    <grid:layoutXL>
+                                        <grid:GridSettings gridTemplateColumns="repeat(auto-fit, 30rem)" gridGap="1rem 1rem" />
+                                    </grid:layoutXL>
+                                </grid:GridResponsiveLayout>
+                            </f:customLayout> -->
+                            <f:customLayout>
+                                <cssgrid:GridBoxLayout xmlns:cssgrid="sap.ui.layout.cssgrid" boxesPerRowConfig="XL3 L3 M2 S1" />
+                            </f:customLayout>
+                            <f:GridListItem press="onPressGridAltMenu" type="Navigation">
+                                <VBox height="100%">
+									<HBox height="100%" class="sapUiSmallMargin" alignItems="Center">
+										<core:Icon src="{altDialogModel>Icon}" color="{altDialogModel>Color}" class="sapUiSmallMarginEnd" width="100%" size="5rem"/>
+										<VBox>
+											<Title text="{altDialogModel>Sutyx}" wrapping="true"/>
+											<Label text="{altDialogModel>Fodes}" wrapping="true"/>
+										</VBox>
+									</HBox>
+								</VBox>
+                            </f:GridListItem>
+                        </f:GridList>
+		<endButton>
+			<Button 
+				text="Kapat"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressAltMenuKapat"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

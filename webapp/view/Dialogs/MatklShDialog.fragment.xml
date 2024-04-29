@@ -1,0 +1,42 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:smartField="sap.ui.comp.smartfield"
+>
+	<Dialog title="{i18n>searchHelpMatkl}">
+		<content>
+			<VBox class="sapUiSmallMarginBegin">
+				<Label
+					text="{i18n>matkl}"
+					width="95%"
+					textAlign="Center"
+				/>
+				<smartField:SmartField
+					width="95%"
+					textAlign="Center"
+					value="{Matkl}"
+					editable="true"
+					innerControlsCreated="onInnerControlsCreated"
+				>
+					<smartField:configuration>
+						<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+					</smartField:configuration>
+				</smartField:SmartField>
+			</VBox>
+		</content>
+		<buttons>
+			<Button
+				text="{i18n>add}"
+				press="handlePressMatklDialogAdd"
+				icon="sap-icon://add"
+				type="Accept"
+			/>
+			<Button
+				text="{i18n>cancel}"
+				press="handlePressMatklDialogClose"
+				icon="sap-icon://decline"
+				type="Reject"
+			/>
+		</buttons>
+	</Dialog>
+</c:FragmentDefinition>

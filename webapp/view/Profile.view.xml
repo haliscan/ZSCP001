@@ -1,0 +1,10 @@
+<mvc:View controllerName="com.tupras.zsrmscp.controller.Profile" xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml"
+	displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<App>
+		<pages>
+			<Page title="{i18n>Previous} Sepetler" showNavButton="true" navButtonPress="onNavBack">
+				<Text text="Profile"/>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

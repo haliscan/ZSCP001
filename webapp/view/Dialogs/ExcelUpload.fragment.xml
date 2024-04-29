@@ -1,0 +1,47 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:u="sap.ui.unified"
+	xmlns:core="sap.ui.core"
+>
+	<Dialog
+		title="{i18n>excelEkle}"
+		class="sapUiSizeCompact"
+	>
+		<beginButton>
+			<Button
+				text="{i18n>buttonKapat}"
+				press="close_excelDialog"
+			/>
+		</beginButton>
+		<HBox class="sapUiTinyMarginTop">
+			<Text
+				text="{i18n>titleDosya} : "
+				class="attachmentDialogTextClass"
+			/>
+			<u:FileUploader
+				id="excelUploader"
+				uploadOnChange="false"
+				sendXHR="true"
+				multiple="false"
+				useMultipart="false"
+				maximumFilenameLength="256"
+				filenameLengthExceed="onFileNameExceed"
+				width="270px"
+				tooltip="{i18n>textYuklenecekDosya}"
+				fileType="xls,xlsx"
+				typeMissmatch="onTypeMissMatch"
+				class="sapUiSmallMarginEnd"
+				uploadComplete="handleExcelUploadComplete"
+			/>
+		</HBox>
+		<HBox justifyContent="End">
+			<Button
+				type="Emphasized"
+				text="{i18n>textYukle}"
+				press="handleExcelUploadPress"
+				class="sapUiSizeCompact sapUiSmallMarginEnd sapUiSmallMarginBottom"
+			/>
+		</HBox>
+	</Dialog>
+</core:FragmentDefinition>

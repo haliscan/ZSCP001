@@ -1,0 +1,84 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{i18n>TitleMalzemeDetay}"
+		contentWidth="50%">
+        <f:SimpleForm id="SimpleFormChange354"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>columnMalzemeNo}" />
+				<Text text="{malzemeDetay>/MalzemeNumarasi}" />
+                <!-- <Label text="{i18n>sozlesmeNumarasi}" />
+				<Text text="{/SozlesmeNumarasi}" /> -->
+				<Label text="{i18n>temelVerilerMetni}" />
+				<TextArea value="{malzemeDetay>/TemelVerilerMetni}" editable="false" width="100%" rows="5">
+					<layoutData>
+						<l:GridData span="XL3 L6 M8 S10" />
+					</layoutData>
+				</TextArea>
+                <Label text="{i18n>ortakTanimMetni}" />
+				<TextArea value="{malzemeDetay>/OrtakTanimMetni}" editable="false" width="100%" rows="5">
+					<layoutData>
+						<l:GridData span="XL3 L6 M8 S10" />
+					</layoutData>
+				</TextArea>
+                <Label text="{i18n>siparisMetni}" />
+				<TextArea value="{malzemeDetay>/SiparisMetni}" editable="false" width="100%" rows="5">
+					<layoutData>
+						<l:GridData span="XL3 L6 M8 S10" />
+					</layoutData>
+				</TextArea>
+			</f:content>
+		</f:SimpleForm>
+		<Table 
+			id="idTableKarakteristik"
+			width="auto"
+            headerText="{i18n>karakteristikler}"
+			items="{malzemeDetay>/Karekteristikler}"			
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column width="50%">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+				<Column width="50%">
+					<Text text="{i18n>columnDeger}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedAnaHesap">
+					<cells>
+						<Text text="{malzemeDetay>Ausp1}"/>
+						<Text text="{malzemeDetay>Smbez}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatMalzemeDetay"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

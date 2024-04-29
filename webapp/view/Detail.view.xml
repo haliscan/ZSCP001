@@ -1,0 +1,877 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:smartField="sap.ui.comp.smartfield"
+	controllerName="com.tupras.zsrmscp.controller.Detail" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:ui="sap.ui.table" xmlns:un="sap.ui.unified">
+	<Page showNavButton="true" navButtonPress="onNavBack">
+		<subHeader>
+			<OverflowToolbar>
+				<Image src="{ path: '', formatter: '.formatter.logoFormatter' }" width="80px" height="22px" press="onClickHome"/>
+				<Button icon="sap-icon://home" tooltip="Ana Sayfa" press="onClickHome"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://person-placeholder" tooltip="{i18n>LastOrders}" press="onGecmisSiparisler"/>
+				<Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet"/>
+			</OverflowToolbar>
+		</subHeader>
+		<content>
+			<u:ObjectPageLayout id="idPageLayoutForm" upperCaseAnchorBar="false" class="sapUiSizeCompact" showFooter="false">
+				<u:headerTitle>
+					<u:ObjectPageDynamicHeaderTitle>
+						<u:expandedHeading>
+							<HBox>
+								<Title text="{detailModel>/baslikBilgileri/CreName}" wrapping="true"/>
+							</HBox>
+						</u:expandedHeading>
+						<u:snappedHeading>
+							<FlexBox fitContainer="true" alignItems="Center">
+								<Title text="{detailModel>/baslikBilgileri/CreName}" wrapping="true"/>
+							</FlexBox>
+						</u:snappedHeading>
+						<u:expandedContent>
+							<Text text="{detailModel>/baslikBilgileri/HeaderDepartman}"/>
+						</u:expandedContent>
+						<u:snappedContent>
+							<Text text="{detailModel>/baslikBilgileri/HeaderDepartman}"/>
+						</u:snappedContent>
+						<u:actions>
+							<Button icon="sap-icon://clinical-tast-tracker" type="Emphasized" text="{i18n>kontrolEt}" visible="{visibleModel>/VisibleOlusturButton}"
+								press="handlePressKontrolEt" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+							<Button icon="sap-icon://create" type="Accept" text="{visibleModel>/textData/approveDocument}"
+								visible="{visibleModel>/VisibleOlusturButton}" press="handlePressOlustur" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+							<!-- text="{i18n>approveDocument}" -->
+							<Button icon="sap-icon://decline" type="Reject" text="{i18n>rejectDocument}" visible="{visibleModel>/VisibleIptalButton}"
+								press="handlePressRejectDocument"/>
+							<Button icon="sap-icon://save" type="Accept" text="{i18n>taslakKaydet}" visible="{visibleModel>/VisibleTaslakButton}"
+								press="handlePressTaslakKaydet" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+							<Button icon="sap-icon://edit" type="Accept" text="{i18n>degistir}" visible="{visibleModel>/VisibleDegistirButton}"
+								press="handlePressDegistir"/>
+							<Button icon="sap-icon://download" type="Accept" text="{i18n>excelDownload}" visible="{visibleModel>/VisibleDegistirButton}"
+								press="downloadExcel"/>
+							<Button icon="sap-icon://upload" type="Accept" text="{i18n>excelUpload}" visible="{visibleModel>/VisibleDegistirButton}"
+								press="openExcelDialog" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+							<!-- <Button icon="sap-icon://accept" type="Accept" text="{i18n>onayla}" visible="{visibleModel>/VisibleOnaylaReddetButon}"
+								press="handlePressOnayla"/>
+							<Button icon="sap-icon://decline" type="Reject" text="{i18n>reddet}" visible="{visibleModel>/VisibleOnaylaReddetButon}"
+								press="handlePressReddet"/> -->
+						</u:actions>
+					</u:ObjectPageDynamicHeaderTitle>
+				</u:headerTitle>
+				<u:headerContent>
+					<FlexBox wrap="Wrap">
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>belgeTipi}"/>
+							<Select visible="true" editable="{detailModel>/headerData/comboBelgeTipiEditable}" forceSelection="false" change="onChangeBelgeTipi"
+								items="{ path: 'subMenuModel>/' }" selectedKey="{detailModel>/headerData/comboBelgeTipi}">
+								<core:Item key="{subMenuModel>Sutyp}" text="{subMenuModel>Sutyx}"/>
+								<layoutData>
+									<layout:GridData span="XL4 L5 M3 S4"/>
+								</layoutData>
+							</Select>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>belgeNumarasi}"/>
+							<Text text="{detailModel>/baslikBilgileri/Scnum}"/>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>belgeDurumu}"/>
+							<Text text="{detailModel>/baslikBilgileri/Dstattx}"/>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>olusturmaTarihi}"/>
+							<Text
+								text="{ path: 'detailModel>/baslikBilgileri/CreDate', formatter: '.formatter.dateFormat' } - { path: 'detailModel>/baslikBilgileri/CreTime', formatter: '.formatter.timeFormat' }"/>
+						</layout:VerticalLayout>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>sepetTutari}"/>
+							<HBox>
+								<Text
+									text="{ parts: ['detailModel>/baslikBilgileri/Hdtot', 'detailModel>/baslikBilgileri/Hwaer'], type: 'sap.ui.model.type.Currency', formatOptions: { preserveDecimals: false, showMeasure: false } }"/>
+								<Text text="{detailModel>/baslikBilgileri/Hwaer}" class="sapUiTinyMarginBegin"/>
+							</HBox>
+						</layout:VerticalLayout>
+						<!-- <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<Label text="{i18n>paraBirimi}"/>
+							<HBox>
+								<Text
+									text="{detailModel>/baslikBilgileri/paraB}"
+									class="sapUiTinyMarginBegin"
+								/>
+							</HBox>
+						</layout:VerticalLayout> -->
+					</FlexBox>
+				</u:headerContent>
+				<u:sections>
+					<u:ObjectPageSection id="idPageSectionHatalar" visible="false" titleUppercase="false" title="{i18n>hataListesi}">
+						<u:subSections>
+							<u:ObjectPageSubSection>
+								<u:blocks>
+									<Panel id="idPanelErrorList" height="150px"/>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection id="idPageSectionBaslik" titleUppercase="false" title="{i18n>baslikBilgileri}">
+						<u:subSections>
+							<u:ObjectPageSubSection title="" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<f:SimpleForm editable="true" layout="ResponsiveGridLayout" title="{i18n>ShopChartInfo}" labelSpanXL="4" labelSpanL="4" labelSpanM="6"
+											labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="1"
+											singleContainerFullSize="false" visible="{ path: 'detailModel>/headerData/baslikPanel' }">
+											<f:content>
+												<core:Title text=""/>
+												<Label text="{i18n>SelectTaking}" visible="{detailModel>/VisibleZZ_SECALM}" required="{detailModel>/RequiredZZ_SECALM}"/>
+												<Select visible="{detailModel>/VisibleZZ_SECALM}" width="90%"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_SECALM'], formatter: '.formatter.enableFormat' }"
+													forceSelection="false" selectedKey="{detailModel>/baslikEkAlanlari/ZzSecalm}" valueState="{detailModel>/ValueStateZzSecalm}">
+													<core:Item key="E" text="Evet"/>
+													<core:Item key="H" text="{i18n>No}"/>
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Select>
+												<Label text="{i18n>SelectTaking} nedeni" visible="{detailModel>/VisibleZZ_SECNDN}" required="{detailModel>/RequiredZZ_SECNDN}"/>
+												<Select width="90%"
+													visible="{ parts: ['detailModel>/VisibleZZ_SECNDN', 'detailModel>/baslikEkAlanlari/ZzSecalm'], formatter: '.formatter.visibleEHFormat' }"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_SECNDN'], formatter: '.formatter.enableFormat' }"
+													forceSelection="false" selectedKey="{detailModel>/baslikEkAlanlari/ZzSecndn}" valueState="{detailModel>/ValueStateZzSecndn}">
+													<core:Item key="IKA" text="{i18n>ISGKA}"/>
+													<core:Item key="GIK" text="{i18n>GIKRK}"/>
+													<core:Item key="PEK" text="Proses Emniyeti Olay/Kaza"/>
+													<core:Item key="PTA" text="Proses Tehlike Analizi (HAZOP, SifPro, Tesis Yer., Atex vb.)"/>
+													<core:Item key="DGR" text="{i18n>Others}"/>
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Select>
+												<Label text="{i18n>TakingType}" visible="{detailModel>/VisibleZZ_ALTUR}" required="{detailModel>/RequiredZZ_ALTUR}"/>
+												<Select visible="{detailModel>/VisibleZZ_ALTUR}" width="90%"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_ALTUR'], formatter: '.formatter.enableFormat' }"
+													forceSelection="false" selectedKey="{detailModel>/baslikEkAlanlari/ZzAltur}" valueState="{detailModel>/ValueStateZzAltur}">
+													<core:Item key="REZ" text="Rezervasyon"/>
+													<core:Item key="TLP" text="Talep"/>
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Select>
+												<Label text="{i18n>MoveType}" visible="{detailModel>/VisibleZZ_BWART}" required="{detailModel>/RequiredZZ_BWART}"/>
+												<smartField:SmartField width="90%" value="{Zzbwart}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_BWART'], formatter: '.formatter.enableFormat' }"
+													change="onSubmitHareket" visible="{detailModel>/VisibleZZ_BWART}" valueState="{detailModel>/ValueStateZzBwart}"
+													innerControlsCreated="onInnerControlsCreated">
+													<smartField:layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</smartField:layoutData>
+												</smartField:SmartField>
+												<Label text="Alan {i18n>Production} Yeri" visible="{detailModel>/VisibleFIELD_WERKS}" required="{detailModel>/RequiredFIELD_WERKS}"/>
+												<smartField:SmartField width="90%" value="{FieldWerks}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableFIELD_WERKS'], formatter: '.formatter.enableFormat' }"
+													change="onSubmitFieldWerks" visible="{ parts: ['detailModel>/VisibleFIELD_WERKS', 'Zzbwart'], formatter: '.formatter.visibleFromBwart' }"
+													innerControlsCreated="onInnerControlsCreated" valueState="{detailModel>/ValueStateFieldWerks}">
+													<smartField:configuration>
+														<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+													</smartField:configuration>
+													<smartField:layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</smartField:layoutData>
+												</smartField:SmartField>
+												<Label text="Alan Depo Yeri" visible="{detailModel>/VisibleFIELD_LGORT}" required="{detailModel>/RequiredFIELD_LGORT}"/>
+												<smartField:SmartField width="90%" value="{FieldLgort}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableFIELD_LGORT'], formatter: '.formatter.enableFormat' }"
+													change="onSubmitFieldLgort" visible="{detailModel>/VisibleFIELD_LGORT}" valueState="{detailModel>/ValueStateFieldLgort}"
+													innerControlsCreated="onInnerControlsCreated">
+													<smartField:configuration>
+														<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+													</smartField:configuration>
+													<smartField:layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</smartField:layoutData>
+												</smartField:SmartField>
+												<Label text="Talep eden sicil" visible="{detailModel>/VisibleZZ_TLPEDN}" required="{detailModel>/RequiredZZ_TLPEDN}"/>
+												<Input width="90%" showValueHelp="true" value="{detailModel>/baslikEkAlanlari/ZzTlpedn}" visible="{detailModel>/VisibleZZ_TLPEDN}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TLPEDN'], formatter: '.formatter.enableFormat' }"
+													valueState="{detailModel>ValueStateZzTlpedn}" change="onSubmitTalepEden" valueHelpRequest="handleValueHelpTalepEden">
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Input>
+												<Label text="Talep eden {i18n>User}"/>
+												<Text text="{detailModel>/baslikEkAlanlari/ZzTlpedntext}"/>
+												<Label text="Talep eden {i18n>Mudurluk}" visible="{detailModel>/VisibleZZ_TLPMDR}" required="{detailModel>/RequiredZZ_TLPMDR}"/>
+												<Input width="90%" showValueHelp="true" value="{detailModel>/baslikEkAlanlari/ZzTlpmdr}" visible="{detailModel>/VisibleZZ_TLPMDR}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TLPMDR'], formatter: '.formatter.enableFormat' }"
+													valueState="{detailModel>/ValueStateZzTlpmdr}" change="onSubmitMudurluk" valueHelpRequest="handleValueHelpMudurluk">
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Input>
+												<Label text="Talep eden {i18n>Mudurluk} {i18n>Desc}" visible="{detailModel>/VisibleZZ_TLPMDR}"/>
+												<Text text="{detailModel>/baslikEkAlanlari/ZzTlpmdrtext}" visible="{detailModel>/VisibleZZ_TLPMDR}"/>
+												<core:Title text=""/>
+												<Label text="{i18n>Usage} yeri" visible="{detailModel>/VisibleZZ_KULYER}" required="{detailModel>/RequiredZZ_KULYER}"/>
+												<Input width="90%" maxLength="100" value="{detailModel>/baslikEkAlanlari/ZzKulyer}" visible="{detailModel>/VisibleZZ_KULYER}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_KULYER'], formatter: '.formatter.enableFormat' }"
+													valueState="{detailModel>/ValueStateZzKulyer}">
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Input>
+												<Label text="{i18n>Muteahhit}" visible="{detailModel>/VisibleZZ_MUTHNO}" required="{detailModel>/RequiredZZ_MUTHNO}"/>
+												<Input width="90%" showValueHelp="true" value="{detailModel>/baslikEkAlanlari/ZzMuthno}" visible="{detailModel>/VisibleZZ_MUTHNO}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_MUTHNO'], formatter: '.formatter.enableFormat' }"
+													valueState="{detailModel>/ValueStateZzMuthno}" change="onSubmitMuteahhit" valueHelpRequest="handleValueHelpMuteahhit">
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Input>
+												<Label text="{i18n>Muteahhit} {i18n>Desc}" visible="{detailModel>/VisibleZZ_MUTHNO}"/>
+												<Text text="{detailModel>/baslikEkAlanlari/ZzMuthTx}" visible="{detailModel>/VisibleZZ_MUTHNO}"/>
+												<Label text="Incoterm" visible="{detailModel>/VisibleZZ_INCOTRM}" required="{detailModel>/RequiredZZ_INCOTRM}"/>
+												<!-- <Input width="90%" showValueHelp="true" value="{detailModel>/baslikEkAlanlari/ZzIncotrm}"
+                                                visible="{detailModel>/VisibleZZ_INCOTRM}"
+                                                editable="{parts : ['detailModel>/headerData/editable','detailModel>/EnableZZ_INCOTRM'] , formatter : '.formatter.enableFormat'}"
+                                                valueState="{detailModel>ValueStateZzIncotrm}">
+                                                <layoutData>
+                                                        <layout:GridData span="XL4 L5 M3 S4" />
+                                                </layoutData>
+                                                </Input> -->
+												<smartField:SmartField id="headerInco" change="onValueChangeInco" visible="{detailModel>/VisibleZZ_INCOTRM}" width="60%" value="{ZzIncotrm}"
+													valueState="{detailModel>/ValueStateZzIncotrm}" contextEditable="true" editable="{detailModel>/headerData/editable}"/>
+												<Label text="Incoterm yeri" visible="{detailModel>/VisibleZZ_INCOPLA}" required="{detailModel>/RequiredZZ_INCOPLA}"/>
+												<Input width="90%" maxLength="50" value="{detailModel>/baslikEkAlanlari/ZzIncopla}" visible="{detailModel>/VisibleZZ_INCOPLA}"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_INCOPLA'], formatter: '.formatter.enableFormat' }"
+													valueState="{detailModel>/ValueStateZzIncopla}">
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Input>
+												<Label text="{i18n>Satici}" visible="{detailModel>/VisibleZZ_LIFNR}"/>
+												<!-- <Input width="90%" showValueHelp="true" value="{detailModel>/baslikEkAlanlari/ZzLifnr}"
+                                                visible="{detailModel>/VisibleZZ_LIFNR}"
+                                                editable="{parts : ['detailModel>/headerData/editable','detailModel>/EnableZZ_LIFNR'] , formatter : '.formatter.enableFormat'}"  
+                                                valueState="{detailModel>ValueStateZzLifnr}">
+                                                <layoutData>
+                                                        <layout:GridData span="XL4 L5 M3 S4" />
+                                                </layoutData>
+                                                </Input> -->
+												<smartField:SmartField id="headerLifnr" change="onValueChangeLifnr" visible="{detailModel>/VisibleZZ_LIFNR}" width="60%" value="{ZzLifnr}"
+													contextEditable="true" editable="{detailModel>/headerData/editable}" valueState="{detailModel>/ValueStateZzLifnr}"/>
+												<Label text="{i18n>Cevre} boyutu" visible="{detailModel>/VisibleZZ_CEVREB}" required="{detailModel>/RequiredZZ_CEVREB}"/>
+												<Select visible="{detailModel>/VisibleZZ_CEVREB}" width="90%"
+													editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_CEVREB'], formatter: '.formatter.enableFormat' }"
+													forceSelection="false" selectedKey="{detailModel>/baslikEkAlanlari/ZzCevreb}" valueState="{detailModel>/ValueStateZzCevreb}">
+													<core:Item key="E" text="Evet"/>
+													<core:Item key="H" text="{i18n>No}"/>
+													<layoutData>
+														<layout:GridData span="XL4 L5 M3 S4"/>
+													</layoutData>
+												</Select>
+											</f:content>
+										</f:SimpleForm>
+										<!--<Table inset="false" items="{ path: 'detailModel>/baslikEkAlanlari'}">
+											<columns>
+												<Column hAlign="Right">
+													<Text text="Alan tan�m�"/>
+												</Column>
+												<Column>
+													<Text text="Alan de�eri"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<cells>
+														<Text text="{detailModel>text}"/>
+														<HBox>
+															<Input value="{detailModel>selectedValue}" visible="{path:'detailModel>type', formatter:'.formatter.typeCellInput'}"
+																editable="{ path: 'detailModel>/headerData/editable'}"/>
+															<Select items="{ path: 'detailModel>items', formatter:'.formatter.typeValueComboBox' }" selectedKey="{detailModel>selectedValue}"
+																visible="{path:'detailModel>type', formatter:'.formatter.typeCellComboBox'}" forceSelection="false"
+																editable="{ path: 'detailModel>/headerData/editable'}">
+																<core:Item key="{detailModel>key}" text="{detailModel>text}"/>
+															</Select>
+															<CheckBox selected="{detailModel>checkBoxValue}" visible="{path:'detailModel>type', formatter:'.formatter.typeCellCheckBox'}"
+																editable="{ path: 'detailModel>/headerData/editable'}"/>
+														</HBox>
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table> -->
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection id="idPageSectionMalzemeler" titleUppercase="false" title="{i18n>malzemeBilgileri}">
+						<u:subSections>
+							<u:ObjectPageSubSection title="{i18n>malzemeBilgileri}" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<ui:Table id="idTableMalzeme" rows="{ path: 'detailModel>/malzemeBilgileri' }" fixedColumnCount="2" selectionMode="MultiToggle"
+											visibleRowCount="5">
+											<ui:extension>
+												<OverflowToolbar active="true">
+													<Button text="{i18n>kalemEkle}" type="Accept" icon="sap-icon://add" press="handlePressKalemEkle"
+														enabled="{ path: 'detailModel>/headerData/editable' }"/>
+													<Button text="{i18n>kalemSil}" type="Reject" icon="sap-icon://delete" press="handlePressKalemSil"
+														enabled="{ path: 'detailModel>/headerData/editable' }"/>
+													<Button text="{i18n>kalemKopyala}" type="Emphasized" icon="sap-icon://copy" press="handlePressKalemKopyala"
+														enabled="{ path: 'detailModel>/headerData/editable' }"/>
+													<Button text="{i18n>malzemeDetaylari}" type="Accept" icon="sap-icon://detail-view" press="handlePressKalemDetay"
+														visible="{visibleModel>/VisibleMalzemeDetay}"/>
+													<Button text="{i18n>sepettenMalzeme}" type="Accept" icon="sap-icon://cart-3" press="handlePressSepetten"
+														enabled="{ path: 'detailModel>/headerData/editable' }" visible="{visibleModel>/VisibleSepettenButton}"/>
+													<Button text="{i18n>hizmettenMalzeme}" type="Accept" icon="sap-icon://cart-3" press="handlePressHizmetten"
+														enabled="{ path: 'detailModel>/headerData/editable' }" visible="{visibleModel>/VisibleHizmettenButton}"/>
+													<ToolbarSpacer/>
+													<Button text="{i18n>malzemeNoDoldur}" type="Accept" icon="sap-icon://activities" press="malzemeNoDoldur"
+														enabled="{ path: 'detailModel>/headerData/editable' }" visible="false"/>
+												</OverflowToolbar>
+											</ui:extension>
+											<ui:columns>
+												<ui:Column width="60px" sortProperty="Itmno" filterProperty="Itmno">
+													<Text text="{i18n>columnNo}"/>
+													<ui:template>
+														<HBox>
+															<Link text="{ path: 'detailModel>Itmno', formatter: '.formatter.removeLeadingZeroes' }" press="handlePressHesapTayini"/>
+															<core:Icon class="TalepDurum" backgroundColor="Negative" height="15px" width="15px" press="handlePressKalemHatasi"
+																visible="{ path: 'detailModel>KalemHatasi', formatter: '.formatter.kalemHatasi' }"/>
+														</HBox>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="180px" sortProperty="Prodi" filterProperty="Prodi" visible="{detailModel>/VisiblePRODI}">
+													<Text text="{i18n>columnMalzemeNo}"/>
+													<ui:template>
+														<Input value="{detailModel>Prodi}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnablePRODI', 'detailModel>Hizmet'], formatter: '.formatter.HizmetEnableFormat' }"
+															valueHelpOnly="true" change="internalUpdateItem" showValueHelp="true" valueHelpRequest="materialDialogOpen"
+															valueState="{detailModel>ValueStateMalzemeKodu}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" sortProperty="Prodtx" filterProperty="Prodtx" visible="{detailModel>/VisiblePRODTX}">
+													<Text text="{i18n>columnMalzemeTanimi}"/>
+													<ui:template>
+														<Input value="{detailModel>Prodtx}" valueState="{detailModel>ValueStateMalzemeTanimi}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>Prodi', 'detailModel>/EnablePRODTX', 'detailModel>Hizmet'], formatter: '.formatter.malzemeTanimEditable' }"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="180px" sortProperty="Matkl" filterProperty="Matkl" visible="{detailModel>/VisibleMATKL}">
+													<Text text="{i18n>columnMalgrubu}"/>
+													<ui:template>
+														<Input value="{detailModel>Matkl}" type="Text" textFormatMode="KeyValue" placeholder="Mal grubu" showSuggestion="true" valueHelpOnly="false"
+															showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableMATKL', 'detailModel>Hizmet'], formatter: '.formatter.reverseHizmetEnableFormat' }"
+															change="onSubmitMalgrubu" valueHelpRequest="matklDiyalogOpen" valueState="{detailModel>ValueStateMalGrubu}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" sortProperty="Matkltx" filterProperty="Matkltx" visible="{detailModel>/VisibleMATKLTX}">
+													<Text text="{i18n>columnMalgrubuTanimi}"/>
+													<ui:template>
+														<Text text="{detailModel>Matkltx}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="60px" hAlign="Center" sortProperty="NotSayisi" filterProperty="NotSayisi">
+													<Text text="{i18n>columnNotlar}"/>
+													<ui:template>
+														<Link text="{detailModel>NotSayisi}" press="handlePressNot"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="180px" hAlign="Begin" sortProperty="Werks" filterProperty="Werks" visible="{detailModel>/VisibleWERKS}">
+													<Text text="{i18n>columnUretimYeri}"/>
+													<ui:template>
+														<Input value="{detailModel>Werks}" type="Text" textFormatMode="KeyValue" placeholder="{i18n>Production} yeri" showSuggestion="true"
+															valueHelpOnly="false" showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableWERKS'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitUretimyeri" valueHelpRequest="werksDiyalogOpen" valueState="{detailModel>ValueStateUretimYeri}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" hAlign="Begin" sortProperty="Werkstx" filterProperty="Werkstx" visible="{detailModel>/VisibleWERKSTX}">
+													<Text text="{i18n>columnUretimYeriTanimi}"/>
+													<ui:template>
+														<Text text="{detailModel>Werkstx}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="180px" hAlign="Begin" sortProperty="Lgort" filterProperty="Lgort" visible="{detailModel>/VisibleLGORT}">
+													<Text text="{i18n>columnDepoYeri}"/>
+													<ui:template>
+														<Input value="{detailModel>Lgort}" type="Text" textFormatMode="KeyValue" placeholder="Depo yeri" showSuggestion="true" valueHelpOnly="false"
+															showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableLGORT'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitDepoyeri" valueHelpRequest="lgortDiyalogOpen" valueState="{detailModel>ValueStateDepoYeri}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" hAlign="Begin" sortProperty="Lgorttx" filterProperty="Lgorttx" visible="{detailModel>/VisibleLGORTTX}">
+													<Text text="{i18n>columnDepoYeriTanimi}"/>
+													<ui:template>
+														<Text text="{detailModel>Lgorttx}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="100px" hAlign="End" visible="{detailModel>/VisibleMENGE}">
+													<Text text="{i18n>columnMiktar}"/>
+													<ui:template>
+														<Input value="{ path: 'detailModel>Menge', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 3 } }"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>EnableMENGE'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateMiktar}" change="kalemToplamHesapla"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="130px" hAlign="Begin" visible="{detailModel>/VisibleMEINS}">
+													<Text text="{i18n>columnBirim}"/>
+													<ui:template>
+														<Input value="{detailModel>Meins}" maxLength="3" type="Text" textFormatMode="KeyValue" placeholder="{i18n>Olcu} birimi"
+															showSuggestion="true" valueHelpOnly="false" showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>EnableMEINS'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitOlcuBirimi" valueHelpRequest="meinsDiyalogOpen" valueState="{detailModel>ValueStateBirim}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" hAlign="Begin" sortProperty="MeinsTx" filterProperty="MeinsTx" visible="{detailModel>/VisibleIMEINSTX}">
+													<Text text="{i18n>columnObTanimi}"/>
+													<ui:template>
+														<Text text="{detailModel>Meinstx}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="125px" hAlign="End" visible="{detailModel>/VisiblePRICE}">
+													<Text text="{i18n>columnBirimFiyat}"/>
+													<ui:template>
+														<Input
+															value="{ parts: ['detailModel>Price', 'detailModel>Iwaer'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+															textAlign="End" valueState="{detailModel>ValueStateBirimFiyat}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>EnablePRICE'], formatter: '.formatter.enableFormat' }"
+															change="kalemToplamHesapla"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="100px" hAlign="End" visible="{detailModel>/VisiblePRICE_UNIT}">
+													<Text text="{i18n>columnFiyatBirimi}"/>
+													<ui:template>
+														<Input value="{ path: 'detailModel>PriceUnit', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 3 } }"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>EnablePRICE_UNIT'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateFiyatBirimi}" change="kalemToplamHesapla"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="110px" hAlign="End" visible="{detailModel>/VisibleITTOT}">
+													<Text text="{i18n>columnTotalFiyat}"/>
+													<ui:template>
+														<Text
+															text="{ parts: ['detailModel>Ittot', 'detailModel>Waers'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" visible="{detailModel>/VisibleIWAER}">
+													<Text text="{i18n>columnParaBirimi}"/>
+													<ui:template>
+														<Input value="{detailModel>Iwaer}" type="Text" textFormatMode="KeyValue" placeholder="Para birimi" showSuggestion="true"
+															valueHelpOnly="false" showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>EnableIWAER'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitParaBirimi" valueHelpRequest="iwaerDiyalogOpen" valueState="{detailModel>ValueStateParaBirimi}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" hAlign="Begin" sortProperty="Iwaertx" filterProperty="Iwaertx" visible="{detailModel>/VisibleIWAERTX}">
+													<Text text="{i18n>columnPbTanimi}"/>
+													<ui:template>
+														<Text text="{detailModel>Iwaertx}"/>
+													</ui:template>
+												</ui:Column>
+												<!--<ui:Column width="150px" hAlign="Begin" sortProperty="Vergi" filterProperty="Vergi">
+                                                    <Text text="{i18n>columnVergi}"/>
+                                                    <ui:template>
+                                                       <Input value="{detailModel>Vergi}" editable="{detailModel>/headerData/editable}" valueState="{detailModel>ValueStateVergi}"/>
+                                                    </ui:template>
+                                                </ui:Column> -->
+												<ui:Column width="150px" hAlign="Begin" visible="{detailModel>/VisibleTAXBR}">
+													<Text text="{i18n>columnVergiOrani}"/>
+													<ui:template>
+														<Input value="{detailModel>Taxbr}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableTAXBR'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateVergiOrani}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="End" visible="{detailModel>/VisibleTAXTU}">
+													<Text text="{i18n>columnVergiTutari}"/>
+													<ui:template>
+														<Input
+															value="{ parts: ['detailModel>Taxtu', 'detailModel>Iwaer'], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: false } }"
+															textAlign="End" valueState="{detailModel>ValueStateVergiTutari}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableTAXTU'], formatter: '.formatter.enableFormat' }"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" visible="{detailModel>/VisibleEEIND}">
+													<Text text="{i18n>columnTeslimatTarihi}"/>
+													<ui:template>
+														<DatePicker dateValue="{detailModel>Eeind}" displayFormat="dd.MM.yyyy" valueFormat="yyyyMMdd"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableEEIND'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateTeslimatTarihi}" change="teslimatChange"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="Ekgrp" filterProperty="Ekgrp" visible="{detailModel>/VisibleEKGRP}">
+													<Text text="{i18n>columnSagrubu}"/>
+													<ui:template>
+														<Input value="{detailModel>Ekgrp}" maxLength="3"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableEKGRP'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateSaGrubu}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="Ekorg" filterProperty="Ekorg" visible="{detailModel>/VisibleEKORG}">
+													<Text text="{i18n>columnSaOrg}"/>
+													<ui:template>
+														<Input value="{detailModel>Ekorg}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableEKORG'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateSaOrg}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Center" sortProperty="ZzTesdrm" filterProperty="ZzTesdrm" visible="{detailModel>VisibleZZ_TESDRM}">
+													<Text text="{i18n>columnTesvikliAlim}"/>
+													<ui:template>
+														<Select width="150px" editable="false" forceSelection="false" selectedKey="{detailModel>ZzTesdrm}">
+															<core:Item key="TEVAR" text="{i18n>Tesvik} var"/>
+															<core:Item key="TEYOK" text="{i18n>Tesvik} yok"/>
+														</Select>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="ZzTesbel" filterProperty="ZzTesbel"
+													visible="{ path: 'detailModel>/malzemeBilgileri', formatter: '.formatter.visibleTesvik' }">
+													<Text text="{i18n>columnTesvikBelgeNo}"/>
+													<ui:template>
+														<Input showValueHelp="false" value="{detailModel>ZzTesbel}" maxLength="20"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TESBEL'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateZzTesBel}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="ZzTesino" filterProperty="ZzTesino"
+													visible="{ path: 'detailModel>/malzemeBilgileri', formatter: '.formatter.visibleTesvik' }">
+													<Text text="{i18n>columnTesvikSiraNo}"/>
+													<ui:template>
+														<Input showValueHelp="false" value="{detailModel>ZzTesino}" maxLength="30"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TESINO'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateZzTesiNo}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Center" sortProperty="ZzTesyid" filterProperty="ZzTesyid"
+													visible="{ path: 'detailModel>/malzemeBilgileri', formatter: '.formatter.visibleTesvik' }">
+													<Text text="{i18n>columnTesvikYerliIthal}"/>
+													<ui:template>
+														<Select width="150px"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TESYID'], formatter: '.formatter.enableFormat' }"
+															forceSelection="false" selectedKey="{detailModel>ZzTesyid}">
+															<core:Item key="YR" text="Yerli"/>
+															<core:Item key="IT" text="Ithal"/>
+														</Select>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="Rsnum" filterProperty="Rsnum" visible="{ path: 'detailModel>/VisibleRSNUM' }">
+													<Text text="{i18n>columnRsnum}"/>
+													<ui:template>
+														<Input showValueHelp="true" value="{ path: 'detailModel>Rsnum', formatter: '.formatter.removeLeadingZeroes' }" maxLength="30"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableRSNUM'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateRsnum}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="Rspos" filterProperty="Rspos" visible="{ path: 'detailModel>/VisibleRSPOS' }">
+													<Text text="{i18n>columnRspos}"/>
+													<ui:template>
+														<Input showValueHelp="true" value="{ path: 'detailModel>Rspos', formatter: '.formatter.removeLeadingZeroes' }" maxLength="30"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableRSPOS'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateRspos}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" sortProperty="ZzTesyid" filterProperty="ZzTesyid"
+													visible="{ path: 'detailModel>ZzTesdrm', formatter: '.formatter.visibleTesvik' }">
+													<Text text="{i18n>columnTesvikSiraNo}"/>
+													<ui:template>
+														<Select width="150px" forceSelection="false" selectedKey="{detailModel>ZzTesyid}"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableZZ_TESYID'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateZzTesyid}">
+															<core:Item key="YR" text="Yerli"/>
+															<core:Item key="IT" text="{i18n>Ithal}"/>
+														</Select>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" visible="{ path: 'detailModel>/VisibleBANFN' }">
+													<Text text="{i18n>columnBanfn}"/>
+													<ui:template>
+														<Input showValueHelp="true" value="{ path: 'detailModel>Banfn', formatter: '.formatter.removeLeadingZeroes' }" maxLength="30"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableBANFN'], formatter: '.formatter.enableFormat' }"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="150px" hAlign="Begin" visible="{ path: 'detailModel>/VisibleEBELN' }">
+													<Text text="{i18n>columnEbeln}"/>
+													<ui:template>
+														<Input showValueHelp="true" value="{ path: 'detailModel>Ebeln', formatter: '.formatter.removeLeadingZeroes' }" maxLength="30"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableEBELN'], formatter: '.formatter.enableFormat' }"/>
+													</ui:template>
+												</ui:Column>
+											</ui:columns>
+										</ui:Table>
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection id="idPageSectionHesapTayini" titleUppercase="false" title="{i18n>hesapTayini}"
+						visible="{detailModel>/VisibleZZ_HESAPTABI}">
+						<u:subSections>
+							<u:ObjectPageSubSection title="{i18n>hesapTayini}" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<ui:Table id="idTableHesapTayin" rows="{ path: 'detailModel>/hesapTayiniBilgileri' }" selectionMode="None" visibleRowCount="5">
+											<ui:extension>
+												<OverflowToolbar active="true">
+													<Text id="idTextHesapTayini" text="{i18n>Tumu}" class="fontSizeKalemNotlari"/>
+													<Button id="idButtonBackHesapTayini" type="Emphasized" icon="sap-icon://close-command-field" press="notBackHesapTayini"/>
+													<Button id="idButtonNextHesapTayini" type="Emphasized" icon="sap-icon://open-command-field" press="notNextHesapTayini"/>
+													<Button type="Accept" icon="sap-icon://resize-vertical" text="{i18n>TumunuGoster}" press="tayinTumunuGoster"/>
+												</OverflowToolbar>
+											</ui:extension>
+											<ui:columns>
+												<ui:Column width="100px" sortProperty="KalemNo" filterProperty="KalemNo">
+													<Text text="{i18n>columnKalemNo}"/>
+													<ui:template>
+														<HBox>
+															<Text text="{ path: 'detailModel>Itmno', formatter: '.formatter.removeLeadingZeroes' }"/>
+															<core:Icon class="TalepDurum" backgroundColor="Negative" height="15px" width="15px" press="handlePressKalemHatasi"
+																visible="{ path: 'detailModel>KalemHatasi', formatter: '.formatter.kalemHatasi' }"/>
+														</HBox>
+													</ui:template>
+												</ui:Column>
+												<ui:Column width="220px" sortProperty="TayinTipi" filterProperty="TayinTipi" visible="{detailModel>/VisibleHSTYP}">
+													<Text text="{i18n>columnTayinTip}"/>
+													<ui:template>
+														<ComboBox items="{detailModel>/tayinTipleri}" selectedKey="{detailModel>Hstyp}" showSecondaryValues="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableHSTYP'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateTayinTipi}" width="100%" change="changeHesapTayini">
+															<core:ListItem key="{detailModel>Keyid}" text="{detailModel>Keytx}" additionalText="{detailModel>Keyid}"/>
+														</ComboBox>
+													</ui:template>
+												</ui:Column>
+												<ui:Column sortProperty="Pyp" filterProperty="Pyp" visible="{detailModel>/VisiblePYPNO}">
+													<Text text="{i18n>columnPyp}"/>
+													<ui:template>
+														<Input value="{detailModel>Pypno}" type="Text" textFormatMode="KeyValue" placeholder="Pyp no" showSuggestion="true" valueHelpOnly="true"
+															showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnablePYPNO', 'detailModel>Hstyp', 'detailModel>/headerData/belgeTipi'], formatter: '.formatter.enableFormatPYP' }"
+															change="onSubmitPypNo" valueHelpRequest="pypDialogOpen" valueState="{detailModel>ValueStatePyp}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column sortProperty="MasrafYeri" filterProperty="MasrafYeri" visible="{detailModel>/VisibleKOSTL}">
+													<Text text="{i18n>columnMasrafYeri}"/>
+													<ui:template>
+														<Input value="{detailModel>Kostl}" type="Text" textFormatMode="KeyValue" placeholder="Masraf yeri" showSuggestion="true"
+															valueHelpOnly="false" showValueHelp="true"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableKOSTL'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitMasrafYeri" valueHelpRequest="kostlDialogOpen" valueState="{detailModel>ValueStateMasrafYeri}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column sortProperty="SiparisNo" filterProperty="SiparisNo" visible="{detailModel>/VisibleAUFNR}">
+													<Text text="{i18n>columnSiparisNo}"/>
+													<ui:template>
+														<Input value="{detailModel>Aufnr}" valueHelpRequest="aufnrDialogOpen" showValueHelp="false"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableAUFNR'], formatter: '.formatter.enableFormat' }"
+															valueState="{detailModel>ValueStateSiparisNo}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column hAlign="Begin" sortProperty="KontrolKodu" filterProperty="KontrolKodu" visible="{detailModel>/VisibleKOKRS}">
+													<Text text="{i18n>columnKontrolKodu}"/>
+													<ui:template>
+														<Input value="{detailModel>Kokrs}" maxLength="4" editable="false" valueState="{detailModel>ValueStateKontrolKodu}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column hAlign="Begin" sortProperty="AnaHesapNo" filterProperty="AnaHesapNo" visible="{detailModel>/VisibleSAKNR}">
+													<Text text="{i18n>columnAnaHesap}"/>
+													<ui:template>
+														<Input value="{detailModel>Saknr}" type="Text" textFormatMode="KeyValue" placeholder="Ana hesap" showSuggestion="true" valueHelpOnly="false"
+															showValueHelp="false"
+															editable="{ parts: ['detailModel>/headerData/editable', 'detailModel>/EnableSAKNR'], formatter: '.formatter.enableFormat' }"
+															change="onSubmitAnaHesap" valueHelpRequest="saknrDiyalogOpen" valueState="{detailModel>ValueStateAnaHesap}"/>
+													</ui:template>
+												</ui:Column>
+												<ui:Column hAlign="Begin" sortProperty="IsAlani" filterProperty="IsAlani" visible="{detailModel>/VisibleGSBER}">
+													<Text text="{i18n>columnIsAlani}"/>
+													<ui:template>
+														<Input value="{detailModel>Gsber}" maxLength="4" editable="false" valueState="{detailModel>ValueStateIsAlani}"/>
+													</ui:template>
+												</ui:Column>
+											</ui:columns>
+										</ui:Table>
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection id="idPageSectionNotlar" titleUppercase="false" title="{i18n>notlar}">
+						<u:subSections>
+							<u:ObjectPageSubSection title="{i18n>notlar}" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<TextArea id="headerNoteId" value="{detailModel>/baslikBilgileri/HeaderNote}" placeholder="{i18n>Header} notu" width="100%" rows="6"
+											editable="{detailModel>/headerData/editable}"/>
+										<Table id="idTableNotlar" visible="false" items="{ path: 'detailModel>/kalemNotlari' }" inset="false" alternateRowColors="true" mode="None">
+											<headerToolbar>
+												<OverflowToolbar active="true">
+													<Text id="idTextNotlar" class="fontSizeKalemNotlari"/>
+													<Button id="idButtonBack" type="Emphasized" icon="sap-icon://close-command-field" press="notBack"/>
+													<Button id="idButtonNext" type="Emphasized" icon="sap-icon://open-command-field" press="notNext"/>
+												</OverflowToolbar>
+											</headerToolbar>
+											<columns>
+												<Column width="100px">
+													<Text text="{i18n>columnKalemNo}"/>
+												</Column>
+												<Column width="200px">
+													<Text text="{i18n>columnKategori}"/>
+												</Column>
+												<Column demandPopin="true" minScreenWidth="790px" popinDisplay="Inline">
+													<Text text="{i18n>columnTanim}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<cells>
+														<Text text="{ path: 'detailModel>Itmno', formatter: '.formatter.removeLeadingZeroes' }"/>
+														<Link text="{detailModel>Noturtx}" press="handlePressNotDegistir"/>
+														<Text text="{detailModel>Descr}"/>
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection titleUppercase="false" title="{i18n>ekler}">
+						<u:subSections>
+							<u:ObjectPageSubSection title="{i18n>ekler}" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<Table id="idAttachmentTable" inset="false" width="auto" items="{detailModel>/fileList}" noDataText="{i18n>noDataTextKayitBulunamadi}"
+											mode="SingleSelectLeft" growing="true" growingScrollToLoad="true" growingThreshold="10000" alternateRowColors="true"
+											class="sapUiSmallMarginTop">
+											<headerToolbar>
+												<Toolbar>
+													<ToolbarSpacer/>
+													<Button id="idAttachmentEkle" enabled="{detailModel>/headerData/editable}" press="openAttachmentDialog" text="{i18n>dosyaEkle}"
+														type="Accept" icon="sap-icon://attachment" class="sapUiTinyMarginBegin"/>
+													<Button id="idAttachmentSil" enabled="{detailModel>/headerData/editable}" press="removeAttachment" text="{i18n>secileniSil}" type="Reject"
+														icon="sap-icon://delete" class="sapUiTinyMarginBegin"/>
+												</Toolbar>
+											</headerToolbar>
+											<columns>
+												<Column width="400px">
+													<Text text="{i18n>titleDosya}"/>
+												</Column>
+												<Column width="100%">
+													<Text text="{i18n>ekTuru}"/>
+												</Column>
+												<Column width="100%">
+													<Text text="{i18n>aciklama}"/>
+												</Column>
+												<Column width="100%" demandPopin="true" popinDisplay="Inline" minScreenWidth="500px">
+													<Text text="{i18n>titleOlusturan}"/>
+												</Column>
+												<Column width="100%" demandPopin="true" popinDisplay="Inline" minScreenWidth="500px">
+													<Text text="{i18n>titleTarih}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<cells>
+														<Link text="{detailModel>FName}" press="onPressFileDownlaod"/>
+														<Text text="{detailModel>Ektxt}"/>
+														<Text text="{detailModel>FDesc}"/>
+														<Text text="{detailModel>Emnam}"/>
+														<Text
+															text="{ path: 'detailModel>Datum', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd.MM.yyyy' } } - { path: 'detailModel>Uzeit', formatter: '.formatter.timeFormat' }"/>
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+					<u:ObjectPageSection titleUppercase="false" title="{i18n>onaycilar}" id="idPageSectionOnay">
+						<u:subSections>
+							<u:ObjectPageSubSection title="{i18n>onaycilar}" titleUppercase="false">
+								<u:blocks>
+									<Panel expanded="true" expandable="true" expand="handleChangeExpand" headerText="{i18n>detaylar}">
+										<headerToolbar>
+											<Toolbar>
+												<ToolbarSpacer/>
+												<MenuButton text="{i18n>ManuelOnayciEkle}" type="Accept" visible="{visibleModel>/VisibleOlusturButton}"
+													enabled="{ path: 'detailModel>/headerData/editable' }">
+													<menu>
+														<Menu>
+															<MenuItem text="{i18n>UsteEkle}" icon="sap-icon://up" press="handleUpperApprover"/>
+															<MenuItem text="{i18n>AltaEkle}" icon="sap-icon://down" press="handleLowerApprover"/>
+														</Menu>
+													</menu>
+												</MenuButton>
+											</Toolbar>
+										</headerToolbar>
+										<Table inset="false" items="{ path: 'detailModel>/onaycilar' }" mode="SingleSelectMaster" id="idOnayciTable">
+											<columns>
+												<Column width="80px">
+													<Text text="{i18n>islemSirasi}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>islemAdimi}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>ilgiliKisiNo2}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>ilgiliKisi2}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>islemDurumu}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>karar}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>onayAciklama}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>islemTarihi}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>alisTarihi}"/>
+												</Column>
+												<Column minScreenWidth="Tablet" demandPopin="true">
+													<Text text="{i18n>kalemSil}"/>
+												</Column>
+											</columns>
+											<items>
+												<ColumnListItem>
+													<cells>
+														<Text text="{detailModel>Seqnr}"/>
+														<Input value="{detailModel>ApprTypeText}" editable="{detailModel>AdhocInd}" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+														<Input value="{detailModel>Agent}" editable="{detailModel>AdhocInd}" valueHelpRequest="approverDialogOpen" showValueHelp="true"
+															submit="handleSubmitApproverSh" enabled="{ path: 'detailModel>/headerData/editable' }"/>
+														<ObjectIdentifier title="{detailModel>Oname}"/>
+														<Text text="{detailModel>WiStatText}"/>
+														<Text text="{detailModel>DecisionText}"/>
+														<Link text="{detailModel>ApprovalNote}" press="openOnayNotuDialogOnay"/>
+														<ObjectIdentifier title="{ path: 'detailModel>WiEdate', formatter: '.formatter.dateFormat' }"
+															text="{ path: 'detailModel>WiEtime', formatter: '.formatter.timeFormat' }"/>
+														<ObjectIdentifier title="{ path: 'detailModel>WiCdate', formatter: '.formatter.dateFormat' }"
+															text="{ path: 'detailModel>WiCtime', formatter: '.formatter.timeFormat' }"/>
+														<Button text="{i18n>delete}" visible="{ path: 'detailModel>AdhocInd' }" enabled="{ path: 'detailModel>/headerData/editable' }"
+															press="handleDeleteApprover"/>
+													</cells>
+												</ColumnListItem>
+											</items>
+										</Table>
+									</Panel>
+								</u:blocks>
+							</u:ObjectPageSubSection>
+						</u:subSections>
+					</u:ObjectPageSection>
+				</u:sections>
+			</u:ObjectPageLayout>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<Button id="btnMPopover" icon="sap-icon://alert" text="{=${message>/}.length}" visible="{/visibleMessages}" type="Emphasized"
+					press="onMessagePopoverPress"/>
+				<ToolbarSpacer/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

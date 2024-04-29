@@ -1,0 +1,78 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/Title}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchMuteahhit"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Lifnr"
+					visibleInFilterBar="true"
+					label="{i18n>columnMuteahhit}">
+					<fb:control>
+						<Input 
+							value="{/Lifnr}"
+							maxLength="10"
+							submit="handleSearchMuteahhit"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Name1"
+					visibleInFilterBar="true"
+					label="{i18n>columnTanim}">
+					<fb:control>
+						<Input 
+							value="{/Name1}"
+							maxLength="35"
+							submit="handleSearchMuteahhit" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableMuteahhit"
+			width="auto"
+			items="{odata_service>/VendorListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+            growing="true"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnMuteahhit}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="200px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedMuteahhit">
+					<cells>
+						<Text text="{odata_service>Lifnr}"/>
+						<Text text="{odata_service>Name1}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatMuteahhit"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

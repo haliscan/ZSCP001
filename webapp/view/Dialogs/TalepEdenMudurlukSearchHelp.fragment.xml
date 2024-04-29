@@ -1,0 +1,85 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/Title}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchMudurluk"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Aufnr"
+					visibleInFilterBar="true"
+					label="{i18n>columnMudurluk}">
+					<fb:control>
+						<Input 
+							value="{/Aufnr}"
+							maxLength="12"
+							submit="handleSearchMudurluk"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Ktext"
+					visibleInFilterBar="true"
+					label="{i18n>columnTanim}">
+					<fb:control>
+						<Input 
+							value="{/Ktext}"
+							maxLength="40"
+							submit="handleSearchMudurluk" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableMudurluk"
+			width="auto"
+			items="{odata_service>/MudurlukListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+            growing="true"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnMudurluk}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="200px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+                <Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="200px">
+					<Text text="{i18n>columnDepartman}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedMudurluk">
+					<cells>
+						<Text text="{odata_service>Aufnr}"/>
+						<Text text="{odata_service>Ktext}"/>
+                        <Text text="{odata_service>Departman}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatMudurluk"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

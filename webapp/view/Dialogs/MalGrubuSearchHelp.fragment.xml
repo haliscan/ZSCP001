@@ -1,0 +1,77 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/TitleMalgrubu}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchMalgrubu"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Malgrubu"
+					visibleInFilterBar="true"
+					label="{i18n>filterMalgrup}">
+					<fb:control>
+						<Input 
+							value="{/Matkl}"
+							maxLength="10"
+							submit="handleSearchMalgrubu"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>filterTanim}">
+					<fb:control>
+						<Input 
+							value="{/Wgbez60}"
+							maxLength="20"
+							submit="handleSearchMalgrubu" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableMalgrubu"
+			width="auto"
+			items="{odata_service>/MaterialGroupSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnMalgrubu}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedMalgrubu">
+					<cells>
+						<Text text="{odata_service>Matkl}"/>
+						<Text text="{odata_service>Wgbez60}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatMalgrubu"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

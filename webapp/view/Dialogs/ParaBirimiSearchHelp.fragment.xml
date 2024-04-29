@@ -1,0 +1,78 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/Title}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchParaBirimi"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Para birimi"
+					visibleInFilterBar="true"
+					label="{i18n>columnParaBirimi}">
+					<fb:control>
+						<Input 
+							value="{/Waers}"
+							maxLength="5"
+							submit="handleSearchParaBirimi"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>columnTanim}">
+					<fb:control>
+						<Input 
+							value="{/Ltext}"
+							maxLength="40"
+							submit="handleSearchParaBirimi" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableParabirimi"
+            growing="true"
+			width="auto"
+			items="{odata_service>/CurrencyListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnParaBirimi}"/>
+				</Column>
+                <Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedParaBirimi">
+					<cells>
+						<Text text="{odata_service>Waers}"/>
+						<Text text="{odata_service>Ltext}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatParaBirimi"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

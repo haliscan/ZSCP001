@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog title="{/TitlePypNo}" contentWidth="50%">
+		<fb:FilterBar search="handleSearchPypNo" showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem groupName="G1" name="PypNo" visibleInFilterBar="true" label="{i18n>columnPypNo}">
+					<fb:control>
+						<Input value="{/Pspnrx}" maxLength="24" submit="handleSearchPypNo"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem groupName="G1" name="Tanim" visibleInFilterBar="true" label="{i18n>columnTanim}">
+					<fb:control>
+						<Input value="{/Postu}" maxLength="40" submit="handleSearchPypNo"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table id="idTablePypNo" width="auto" items="{odata_service>/PypListSet}" growing="true" noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column width="100px">
+					<Text text="{i18n>columnPypNo}"/>
+				</Column>
+				<Column demandPopin="true" popinDisplay="Inline" minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem type="Active" press="handleSelectedPypNo">
+					<cells>
+						<Text text="{odata_service>Pspnrx}"/>
+						<Text text="{odata_service>Postu}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button text="{i18n>buttonKapat}" type="Reject" icon="sap-icon://sys-cancel" press="handlePressKapatPypNo"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,45 @@
+<mvc:View controllerName="com.tupras.zsrmscp.controller.GecmisSiparisler" xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml"
+	displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<App>
+		<pages>
+			<Page title="{i18n>LastOrders}" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<Table id="idProductsTable" inset="false" items="{/}" mode="SingleSelectMaster">
+						<columns>
+							<Column width="12em">
+								<Text text="{i18n>Order} no"/>
+							</Column>
+							<Column minScreenWidth="Tablet" demandPopin="true">
+								<Text text="{i18n>Product} adedi"/>
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+								<Text text="Birim"/>
+							</Column>
+							<Column hAlign="End">
+								<Text text="Fiyat"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<ObjectIdentifier title="{UrunAdi}" text="{KalemNo}"/>
+									<Text text="{Miktar}"/>
+									<Text text="{Birim}"/>
+									<ObjectNumber
+										number="{ parts:[{path:'Fiyat'},{path:'FiyatBirimi'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+										unit="{FiyatBirimi}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button type="Accept" text="{i18n>Orderi} tekrarla" press="onSepetOnay"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

@@ -1,0 +1,96 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/Title}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchDepoyeri"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="UretimYeri"
+					visibleInFilterBar="true"
+					label="{i18n>filterUretimYeri}">
+					<fb:control>
+						<Input 
+							value="{/Werks}"
+							maxLength="4"
+							submit="handleSearchDepoyeri"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+                <fb:FilterGroupItem 
+					groupName="G1"
+					name="DepoYeri"
+					visibleInFilterBar="true"
+					label="{i18n>columnDepoYeri}">
+					<fb:control>
+						<Input 
+							value="{/Lgort}"
+							maxLength="4"
+							submit="handleSearchDepoyeri"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>columnDepoYeriTanimi}">
+					<fb:control>
+						<Input 
+							value="{/Lgobe}"
+							maxLength="16"
+							submit="handleSearchDepoyeri" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableDepoyeri"
+			width="auto"
+			items="{odata_service>/LgortListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>filterUretimYeri}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="100px">
+					<Text text="{i18n>columnDepoYeri}"/>
+				</Column>
+                <Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnDepoYeriTanimi}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedDepoyeri">
+					<cells>
+						<Text text="{odata_service>Werks}"/>
+						<Text text="{odata_service>Lgort}"/>
+                        <Text text="{odata_service>Lgobe}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatDepoyeri"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

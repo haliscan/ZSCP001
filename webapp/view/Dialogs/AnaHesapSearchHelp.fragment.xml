@@ -1,0 +1,77 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/TitleAnaHesap}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchAnaHesap"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="AnaHesap"
+					visibleInFilterBar="true"
+					label="{i18n>filterAnaHesap}">
+					<fb:control>
+						<Input 
+							value="{/Saknr}"
+							maxLength="10"
+							submit="handleSearchAnaHesap"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>filterAnaHesapTanimi}">
+					<fb:control>
+						<Input 
+							value="{/Txt20}"
+							maxLength="20"
+							submit="handleSearchAnaHesap" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableAnaHesaplar"
+			width="auto"
+			items="{odata_service>/AccountListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnAnaHesap}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedAnaHesap">
+					<cells>
+						<Text text="{odata_service>Saknr}"/>
+						<Text text="{odata_service>Txt20}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatAnaHesap"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

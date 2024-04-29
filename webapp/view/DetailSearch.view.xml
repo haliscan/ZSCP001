@@ -1,0 +1,95 @@
+<mvc:View
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	controllerName="com.tupras.zsrmscp.controller.DetailSearch"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:semantic="sap.m.semantic"
+	height="100%"
+	xmlns:l="sap.ui.layout"
+>
+	<App>
+		<pages>
+			<Page>
+				<subHeader>
+					<OverflowToolbar>
+						<!-- <ImageContent
+							class="sapUiTinyMarginBottom"
+							src="{
+								path: '',
+								formatter: '.formatter.logoFormatter'
+							}"
+							description="Icon"
+							press="onClickHome"
+						/> -->
+						<Button
+							icon="sap-icon://home"
+							tooltip="Ana Sayfa"
+							press="onClickHome"
+						/>
+						<ToolbarSpacer/>
+						<HBox
+							alignItems="Center"
+							justifyContent="Center"
+						>
+							<Input
+								id="searchInput"
+								width="40rem"
+								submit="handleNavigateSearch"
+							/>
+							<Button
+								id="kategoriAraButton"
+								press="handleNavigateSearch"
+								icon="sap-icon://search"
+								type="Emphasized"
+							/>
+						</HBox>
+						<ToolbarSpacer/>
+						<Button
+							icon="sap-icon://cart"
+							text="{viewModel>/cartCount}"
+							tooltip="Sepet"
+							iconFirst="true"
+							press="onClickSepet"
+						/>
+					</OverflowToolbar>
+				</subHeader>
+				<content>
+					<List
+						items="{
+						}"
+						id="detailList"
+						mode="MultiSelect"
+					>
+						<ObjectListItem
+							id="detailListObj"
+							title="{Prodtx}"
+							type="Active"
+							press="onPressGrid"
+							number="{MinimumFiyat}"
+							numberUnit="{ParaBirimi}"
+							icon="{productsModel>PictureUrl}"
+							numberState="Success"
+						>
+							<ObjectAttribute text="{Prodid}"/>
+							<ObjectAttribute text="{Categtx}"/>
+						</ObjectListItem>
+					</List>
+				</content>
+				<footer>
+					<OverflowToolbar class="sapUiSmallMarginTop">
+						<ToolbarSpacer/>
+						<Button
+							text="Sepete ekle"
+							type="Emphasized"
+							icon="sap-icon://add"
+							press="onPressSepeteEkle"
+						/>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

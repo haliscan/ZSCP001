@@ -1,0 +1,140 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:m="sap.m"
+	controllerName="com.tupras.zsrmscp.controller.UrunDetay" height="100%" xmlns:core="sap.ui.core" xmlns:forms="sap.ui.layout.form">
+	<m:Page title="Detaylar">
+		<m:headerContent>
+			<m:Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet" text="{detailsModel>/cartCount}" id="sepetButton"/>
+		</m:headerContent>
+		<m:content>
+			<ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" showEditHeaderButton="true"
+				editHeaderButtonPress="handleEditBtnPress" upperCaseAnchorBar="false">
+				<headerTitle>
+					<ObjectPageDynamicHeaderTitle>
+						<expandedHeading>
+							<m:HBox>
+								<m:Title text="{detailsModel>/malzeme/Prodtx}" wrapping="true"/>
+							</m:HBox>
+						</expandedHeading>
+						<snappedHeading>
+							<m:FlexBox fitContainer="true" alignItems="Center">
+								<m:Title text="{detailsModel>/malzeme/Prodtx}" wrapping="true" class="sapUiTinyMarginEnd"/>
+								<!--<m:Text text="{detailsModel>/0/Fiyat} {detailsModel>/0/ParaBirimi}" wrapping="true"/> -->
+							</m:FlexBox>
+						</snappedHeading>
+						<expandedContent>
+							<m:Text text="{detailsModel>/malzeme/Prodid}"/>
+						</expandedContent>
+						<snappedContent>
+							<m:Text text="{detailsModel>/malzeme/Prodid}"/>
+						</snappedContent>
+						<actions>
+							<m:Button text="{i18n>addToBasket}" icon="sap-icon://add" type="Emphasized" press="onAddCart"/>
+						</actions>
+					</ObjectPageDynamicHeaderTitle>
+				</headerTitle>
+				<headerContent>
+					<m:FlexBox wrap="Wrap" fitContainer="true">
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<m:ObjectAttribute title="Malzeme {i18n>Number}" text="{detailsModel>/malzeme/Prodid}"/>
+							<!--<m:ObjectAttribute title="Birim" text="{detailsModel>/0/Birim}" class="sapUiTinyMarginTop"/> -->
+						</layout:VerticalLayout>
+						<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+							<m:ObjectAttribute title="Mal Grubu" text="{detailsModel>/malzeme/Categid} - {detailsModel>/malzeme/Categtx}"/>
+						</layout:VerticalLayout>
+					</m:FlexBox>
+				</headerContent>
+				<sections>
+					<ObjectPageSection titleUppercase="false" id="ayrintiSection" title="{i18n>Details}">
+						<subSections>
+							<ObjectPageSubSection id="goalsSectionSS1">
+								<blocks>
+									<forms:SimpleForm editable="false" layout="ColumnLayout" columnsM="2" columnsL="3" columnsXL="4">
+										<m:Label text="Boyut"/>
+										<m:Text text="{detailsModel>/malzeme/Laeng}"/>
+										<m:Label text="{i18n>Agirlik}"/>
+										<m:Text text="{detailsModel>/malzeme/Ntgew}"/>
+										<m:Label text="Birim"/>
+										<m:Text text="{detailsModel>/malzeme/Meins}"/>
+										<m:Label text="Mal grubu"/>
+										<m:Text text="{detailsModel>/malzeme/Matkl}"/>
+										<m:Label text="{i18n>Tedarikci} {i18n>Number}"/>
+										<m:Text text="{detailsModel>/malzeme/Lifnr}"/>
+										<m:Label text="Harici {i18n>Uretici}"/>
+										<m:Text text="{detailsModel>/0/HariciUretici}"/>
+										<m:Label text="{i18n>Tedarikci}"/>
+										<m:Text text="{detailsModel>/malzeme/NameText}"/>
+										<m:Label text="Stok durumu"/>
+										<m:Text text="{ path: 'detailsModel>/malzeme/Stok', formatter: '.formatter.stokFormat' }"/>
+									</forms:SimpleForm>
+								</blocks>
+							</ObjectPageSubSection>
+						</subSections>
+					</ObjectPageSection>
+					<ObjectPageSection titleUppercase="false" id="kalemSection" title="Karakteristikler" importance="Medium">
+						<subSections>
+							<ObjectPageSubSection id="personalSectionSS1">
+								<blocks>
+									<m:Table id="idProductsTable" inset="false" items="{ path: 'detailsModel>/karakter' }">
+										<!--<<m:headerToolbar>
+											m:OverflowToolbar>
+												<m:ToolbarSpacer/>
+												<m:Button tooltip="S�ralama D�zeni" icon="sap-icon://sort" press="handleSortButtonPressed"/>
+											</m:OverflowToolbar> 
+										</m:headerToolbar>-->
+										<m:columns>
+											<m:Column minScreenWidth="Desktop" demandPopin="true">
+												<m:Text text="{i18n>Production} yeri"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true">
+												<m:Text text="Malzeme {i18n>Number}"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="{i18n>Satinalma} belge {i18n>Number}"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Ortak {i18n>Desc} kodu"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Teknik resim"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Eski Malzeme {i18n>Number}"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Yerli imalat"/>
+											</m:Column>
+											<!--<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">-->
+											<!--	<m:Text text="Orjinal {i18n>Parca} {i18n>Number}"/>-->
+											<!--</m:Column>-->
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Anahtar {i18n>Sozcukler}"/>
+											</m:Column>
+											<m:Column minScreenWidth="Desktop" demandPopin="true" hAlign="End">
+												<m:Text text="Marka"/>
+											</m:Column>
+										</m:columns>
+										<m:items>
+											<m:ColumnListItem>
+												<m:cells>
+													<m:Text text="{detailsModel>Werks}"/>
+													<m:Text text="{detailsModel>Matnr}"/>
+													<m:Text text="{detailsModel>Contract}"/>
+													<m:Text text="{detailsModel>Zotkod1}"/>
+													<m:Text text="{detailsModel>Zteknik}"/>
+													<m:Text text="{detailsModel>Bismt}"/>
+													<m:Text text="{detailsModel>Zyerlii}"/>
+													<!--<m:Text text="{detailsModel>Zorganalp}"/>-->
+													<m:Text text="{detailsModel>SinifTanimi}"/>
+													<m:Text text="{detailsModel>Zmarka}"/>
+												</m:cells>
+											</m:ColumnListItem>
+										</m:items>
+									</m:Table>
+								</blocks>
+							</ObjectPageSubSection>
+						</subSections>
+					</ObjectPageSection>
+				</sections>
+			</ObjectPageLayout>
+		</m:content>
+	</m:Page>
+</mvc:View>

@@ -1,0 +1,53 @@
+<mvc:View controllerName="com.tupras.zsrmscp.controller.Cart" xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml"
+	displayBlock="true" xmlns="sap.m" xmlns:grid="sap.ui.layout.cssgrid" xmlns:f="sap.f" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<App>
+		<pages>
+			<Page title="Sepet" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+					<List id="list" mode="Delete" delete="onCartEntriesDelete" enableBusyIndicator="true"
+						headerText="{i18n>ProductsOnChart} ({viewModel>/itemCount})" growing="true" items="{cartProducts>/}" noDataText="{i18n>ProductNotFound}">
+						<!-- <ObjectListItem title="{cartProducts>Prodtx}" type="Inactive" numberState="Success">
+                            <ObjectAttribute text="{cartProducts>Prodi}"/>
+                        </ObjectListItem> -->
+						<!--<InputListItem label="{cartProducts>Prodi} - {cartProducts>Prodtx}">
+                            <Input
+                                textAlign="End"
+                                width="100px"
+                                placeholder="Miktar"
+                                value="{cartProducts>Menge}"
+                                change="handleChangeMiktar" />
+                        </InputListItem> -->
+						<CustomListItem>
+							<HBox>
+								<HBox width="100%">
+									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+										<Text text="{cartProducts>Prodi}"/>
+										<Label text="{cartProducts>Prodtx}"/>
+									</VBox>
+								</HBox>
+								<VBox>
+									<Button icon="sap-icon://table-view" text="{i18n>degerlemeTuru}" press="onButtonValidateTypePress"/>
+									<Input class="sapUiSmallMarginTop sapUiTinyMarginEnd" textAlign="End" width="100px" placeholder="Miktar" value="{cartProducts>Menge}"
+										change="handleChangeMiktar"/>
+									<HBox width="100px">
+										<Text text="{cartProducts>Quantity}" textAlign="Begin" width="48px"/>
+										<Text class="sapUiTinyMarginEnd" text="{cartProducts>Meins}" textAlign="End" width="40px"
+											visible="{ path: 'cartProducts>Quantity', formatter: '.formatter.quantityMeins' }"/>
+									</HBox>
+								</VBox>
+							</HBox>
+						</CustomListItem>
+					</List>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button visible="{viewModel>/visibleCheck}" type="Neutral" text="{i18n>checkCarts}" press="checkQuantity"/>
+						<Button type="Reject" text="{i18n>deleteAllCart}" press="onDeleteAllCarts"/>
+						<Button type="Accept" text="{i18n>transferCarts}" press="onSepetAktar"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

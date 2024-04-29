@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>dosyaEkle}" class="sapUiSizeCompact">
+		<beginButton>
+			<Button text="{i18n>buttonKapat}" press="_closeAttachmentDialog"/>
+		</beginButton>
+		<HBox class="sapUiTinyMarginTop">
+			<Text text="{i18n>filterAciklama} : " class="attachmentDialogTextClass"/>
+			<Input value="{attachmentModel>/Aciklama}" maxLength="80" width="200px"/>
+		</HBox>
+		<HBox class="sapUiTinyMarginTop">
+			<Text text="{i18n>ekTuru} : " class="attachmentDialogTextClass"/>
+			<Select width="200px" forceSelection="false" selectedKey="{attachmentModel>/Ektyp}"
+				items="{ path: 'attachmentModel>/EkTurleri'}">
+				<core:Item key="{attachmentModel>Value}" text="{attachmentModel>Valtext}"/>
+			</Select>
+		</HBox>
+		<HBox class="sapUiTinyMarginTop">
+			<Text text="{i18n>titleDosya} : " class="attachmentDialogTextClass"/>
+			<u:FileUploader id="fileUploader" uploadOnChange="false" sendXHR="true" multiple="false" useMultipart="false" maximumFilenameLength="256"
+				filenameLengthExceed="onFileNameExceed" width="270px" tooltip="{i18n>textYuklenecekDosya}" uploadComplete="handleUploadComplete"
+				fileType="doc,docx,txt,xls,xlsx,ppt,pptx,jpeg,jpg,png,bmp,gif,pdf,rar,zip,eml,msg,tiff,html,tif" typeMissmatch="onTypeMissMatch"
+				class="sapUiSmallMarginEnd"/>
+		</HBox>
+		<HBox justifyContent="End">
+			<Button type="Emphasized" text="{i18n>textYukle}" press="handleUploadPress"
+				class="sapUiSizeCompact sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+		</HBox>
+	</Dialog>
+</core:FragmentDefinition>

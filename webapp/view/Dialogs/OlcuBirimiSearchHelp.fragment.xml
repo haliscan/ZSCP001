@@ -1,0 +1,78 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/Title}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchOlcuBirimi"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Ölçü birimi"
+					visibleInFilterBar="true"
+					label="{i18n>columnBirim}">
+					<fb:control>
+						<Input 
+							value="{/Msehi}"
+							maxLength="3"
+							submit="handleSearchOlcuBirimi"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Tanim"
+					visibleInFilterBar="true"
+					label="{i18n>columnTanim}">
+					<fb:control>
+						<Input 
+							value="{/Msehl}"
+							maxLength="30"
+							submit="handleSearchOlcuBirimi" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableOlcubirimi"
+            growing="true"
+			width="auto"
+			items="{odata_service>/MeasureListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnBirim}"/>
+				</Column>
+                <Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnTanim}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedOlcuBirimi">
+					<cells>
+						<Text text="{odata_service>Msehi}"/>
+						<Text text="{odata_service>Msehl}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatOlcuBirimi"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

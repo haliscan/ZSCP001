@@ -1,0 +1,63 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:smartField="sap.ui.comp.smartfield"
+>
+	<Dialog title="{i18n>searchHelpMaterial}">
+		<content>
+			<VBox class="sapUiSmallMarginBegin">
+				<Label
+					text="{i18n>material}"
+					width="95%"
+					textAlign="Center"
+				/>
+				<smartField:SmartField
+					width="95%"
+					textAlign="Center"
+					value="{Prodi}"
+					editable="true"
+					innerControlsCreated="onInnerControlsCreated"
+					visible="{
+						path: 'detailModel>/VisibleProdiTSh',
+						formatter: '.formatter.reverseFormat'
+					}"
+				>
+					<smartField:configuration>
+						<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+					</smartField:configuration>
+				</smartField:SmartField>
+				<smartField:SmartField
+					width="95%"
+					textAlign="Center"
+					value="{Prodit}"
+					editable="true"
+					change="onValueChangeMaterialSh"
+					visible="{detailModel>/VisibleProdiTSh}"
+				>
+					<smartField:configuration>
+						<smartField:Configuration preventInitialDataFetchInValueHelpDialog="false"/>
+					</smartField:configuration>
+				</smartField:SmartField>
+				<Input
+					value="{Prodtx}"
+					editable="false"
+					width="97%"
+				/>
+			</VBox>
+		</content>
+		<buttons>
+			<Button
+				text="{i18n>add}"
+				press="handlePressMaterialDialogAdd"
+				icon="sap-icon://add"
+				type="Accept"
+			/>
+			<Button
+				text="{i18n>cancel}"
+				press="handlePressMaterialDialogClose"
+				icon="sap-icon://decline"
+				type="Reject"
+			/>
+		</buttons>
+	</Dialog>
+</c:FragmentDefinition>

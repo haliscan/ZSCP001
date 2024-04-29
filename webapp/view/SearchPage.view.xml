@@ -1,0 +1,276 @@
+<mvc:View
+	controllerName="com.tupras.zsrmscp.controller.SearchPage"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.f"
+	xmlns:grid="sap.ui.layout.cssgrid"
+	xmlns:semantic="sap.m.semantic"
+>
+	<Page
+		showNavButton="true"
+		navButtonPress="onNavBack"
+	>
+		<!--<headerContent>
+					<Button icon="sap-icon://home" tooltip="Home" press="onClickHome"/>
+					<Button icon="sap-icon://person-placeholder" tooltip="Profil"/>
+					<Button icon="sap-icon://cart" tooltip="Sepet" press="onClickSepet"/>
+				</headerContent>-->
+		<subHeader>
+			<OverflowToolbar>
+				<Image
+					src="{
+						path: '',
+						formatter: '.formatter.logoFormatter'
+					}"
+					width="80px"
+					height="22px"
+					press="onClickHome"
+				/>
+				<Button
+					icon="sap-icon://home"
+					tooltip="Ana Sayfa"
+					press="onClickHome"
+				/>
+				<ToolbarSpacer/>
+				<HBox
+					alignItems="Center"
+					justifyContent="Center"
+				>
+					<!-- <Button id="kategoriButton" text="Kategoriler" press="handlePressOpenMenu" icon="sap-icon://slim-arrow-right" type="Emphasized"/> -->
+					<Input
+						id="searchInput"
+						width="34rem"
+						showSuggestion="true"
+						suggestionItems="{helperSearchModel>/}"	
+						submit="handlePressSearchCategory"			
+					>
+						<suggestionItems>
+							<core:Item text="{helperSearchModel>UrunAdi}"/>
+						</suggestionItems>
+					</Input>
+					<Button
+						id="kategoriAraButton"
+						press="handlePressSearchCategory"
+						icon="sap-icon://search"
+						type="Emphasized"
+					/>
+				</HBox>
+				<HBox
+					alignItems="Center"
+					justifyContent="Center"
+				>
+					<Link
+						text="{i18n>DetailedSearchPage}"
+						press="onDetayliArama"
+					/>
+				</HBox>
+				<ToolbarSpacer/>
+				<Button
+					icon="sap-icon://cart"
+					text="{viewModel>/cartCount}"
+					tooltip="Sepet"
+					iconFirst="true"
+					press="onClickSepet"
+				/>
+			</OverflowToolbar>
+		</subHeader>
+		<content>
+			<SplitContainer>
+				<masterPages>
+					<semantic:MasterPage
+						title="Filtreler"
+						showFooter="false"
+					>
+						<!-- <List
+			id="categoryList"
+			items="{/CategoryListSet}"
+			mode="MultiSelect"		
+			includeItemInSelection="true">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Kategoriler" level="H2" />			
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<StandardListItem
+			title="{Categtx}"
+			counter="{Count}"
+			iconDensityAware="false"
+			iconInset="false" />
+	</List>							 -->
+						<Tree
+							items="{viewModel>/CategoryTreeSet}"
+							mode="SingleSelect"
+							select="handlePressCategoryItem"
+						>
+							<CustomTreeItem>
+								<FlexBox
+									alignItems="Start"
+									width="100%"
+								>
+									<items>
+										<!-- <Button icon="sap-icon://filter" press="handlePressCategoryItem" class="sapUiSmallMarginEnd" /> -->
+										<!-- <Text text="{viewModel>text}  {viewModel>descr}"/> -->
+										<HBox>
+											<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">												
+												<Label text="{viewModel>text} "/>
+												<Text text="{viewModel>descr}"/>
+											</VBox>
+										</HBox>
+									</items>
+								</FlexBox>
+							</CustomTreeItem>
+						</Tree>
+						<!-- <List headerText="Kategoriler" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text="" selected="true"/>
+													<Link text="LPG(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Do�al Gaz(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Kategori Test(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Kaynak(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+                    <List headerText="Tedarik�i" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="AKPA DAY(5)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="SUMOTA�(24)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="CEM T�CARET(7)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="G�KDEM�RLER(12)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+								<List headerText="Markas�" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="AYGAZ(4)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Test Marka(21)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Ar�elik(17)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Merapisoft(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List>
+								<List headerText="�zellikler" mode="None" class="sapUiContentPadding" growing="true" growingThreshold="2" growingScrollToLoad="false">
+									<CustomListItem>
+										<HBox>
+											<VBox class="sapUiSmallMarginTopBottom">
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="�r�ne �zel �zellik(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Boyut(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Miktar(11)" class="linkConditions"/>
+												</HBox>
+												<HBox alignItems="Center">
+													<CheckBox text=""/>
+													<Link text="Fiyat(11)" class="linkConditions"/>
+												</HBox>
+											</VBox>
+										</HBox>
+									</CustomListItem>
+								</List> -->
+					</semantic:MasterPage>
+				</masterPages>
+				<detailPages>
+					<semantic:DetailPage
+						title="{i18n>Products}"
+						showFooter="false"
+					>
+						<OverflowToolbar class="sapUiSmallMarginTop">
+							<Title
+								text="Malzemeler"
+								titleStyle="H4"
+							/>
+							<ToolbarSpacer/>
+						</OverflowToolbar>
+						<List
+							items="{
+							}"
+							id="listProducts"
+							visible="true"
+							growing="true"
+							growingThreshold="100"
+							mode="MultiSelect"
+						>
+							<ObjectListItem
+								id="prodObjItem"
+								title="{Prodtx}"
+								type="Active"
+								press="onPressGrid"
+								numberState="Success"
+							>
+								<ObjectAttribute text="{Prodid}"/>
+								<ObjectAttribute text="{Categtx}"/>
+							</ObjectListItem>
+						</List>
+					</semantic:DetailPage>
+				</detailPages>
+			</SplitContainer>
+		</content>
+		<footer>
+			<OverflowToolbar class="sapUiSmallMarginTop">
+				<!-- <Button text="Filtrele" type="Emphasized" icon="sap-icon://filter" press="filterCategoryList"/> -->
+				<ToolbarSpacer/>
+				<Button
+					text="Sepete ekle"
+					type="Emphasized"
+					icon="sap-icon://add"
+					press="onPressSepeteEkle"
+				/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,0 +1,90 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{/TitleTalepEden}"
+		contentWidth="50%">
+		<fb:FilterBar 
+			search="handleSearchTalepEden"
+			showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Sicil"
+					visibleInFilterBar="true"
+					label="{i18n>columnKullaniciSicil}">
+					<fb:control>
+						<Input 
+							value="{/Uname}"
+							maxLength="12"
+							submit="handleSearchTalepEden"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem 
+					groupName="G1"
+					name="Firstname"
+					visibleInFilterBar="true"
+					label="{i18n>filterAdi}">
+					<fb:control>
+						<Input 
+							value="{/Firstname}"
+							maxLength="40"
+							submit="handleSearchTalepEden" />
+					</fb:control>
+				</fb:FilterGroupItem>
+                <fb:FilterGroupItem 
+					groupName="G1"
+					name="Lastname"
+					visibleInFilterBar="true"
+					label="{i18n>filterSoyadi}">
+					<fb:control>
+						<Input 
+							value="{/Lastname}"
+							maxLength="40"
+							submit="handleSearchTalepEden" />
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>
+		</fb:FilterBar>
+		<Table 
+			id="idTableTalepEden"
+			width="auto"
+			items="{odata_service>/UserListSet}"
+			noDataText="{i18n>noDataTextKayitBulunamadi}"
+            growing="true"
+			class="sapUiResponsiveMargin">
+			<columns>
+				<Column
+					width="100px">
+					<Text text="{i18n>columnKullaniciSicil}"/>
+				</Column>
+				<Column 
+					demandPopin="true" 
+					popinDisplay="Inline" 
+					minScreenWidth="400px">
+					<Text text="{i18n>columnAdiSoyadi}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem 
+					type="Active"
+					press="handleSelectedTalepEden">
+					<cells>
+						<Text text="{odata_service>Uname}"/>
+						<Text text="{odata_service>Ename}"/>
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="handlePressKapatTalepEden"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

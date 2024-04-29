@@ -1,0 +1,45 @@
+<core:FragmentDefinition 
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout">
+	<Dialog 
+		title="{i18n>rejectNoteTitle}"
+		contentWidth="50%">
+        <f:SimpleForm id="iptalNotuForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="3"
+			labelSpanL="3"
+			labelSpanM="3"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="4"
+			emptySpanL="4"
+			emptySpanM="4"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>rejectText}" />
+				<TextArea id="textAreaWithBinding2" value="{detailModel>/rejectNote}" showExceededText="true" maxLength="500" width="100%"/>
+			</f:content>
+		</f:SimpleForm>
+		<beginButton>
+			<Button 
+				text="{i18n>buttonSend}"
+				type="Accept"
+				icon="sap-icon://paper-plane"
+				press="handlePressSendNote"/>
+		</beginButton>
+		<endButton>
+			<Button 
+				text="{i18n>buttonKapat}"
+				type="Reject"
+				icon="sap-icon://sys-cancel"
+				press="closeOnayNotuDialog"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>
